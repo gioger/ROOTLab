@@ -16,6 +16,6 @@ ParticleType::ParticleType(std::string name, double mass, int charge)
 void ParticleType::Print() const
 {
     std::cout << "Particle type: " << m_name << '\n'
-              << "Mass: " << m_mass << " MeV/c^2\n"
+              << "Mass: " << m_mass << " MeV/c^2\n" // check units
               << "Charge: " << m_charge << " e\n";
 }

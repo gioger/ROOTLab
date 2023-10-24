@@ -5,14 +5,14 @@
 
 class ResonanceType : ParticleType
 {
-private:
-    double m_width{};
-
 public:
     ResonanceType(std::string name, double mass, int charge, double width);
 
-    double GetWidth() const { return m_width; }
+    double GetWidth() const { return fWidth; }
     void Print() const override;
+
+private:
+    double fWidth{};
 };
 
 #endif // RESONANCE_HPP

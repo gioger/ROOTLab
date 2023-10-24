@@ -1,14 +1,14 @@
-#include "resonance.hpp"
+#include "../include/resonance.hpp"
 
 #include <iostream>
 
 ResonanceType::ResonanceType(std::string name, double mass, int charge, double width)
-    : ParticleType{std::move(name), mass, charge}, m_width{width}
+    : ParticleType{std::move(name), mass, charge}, fWidth{width}
 {
-    if (m_width < 0.)
+    if (fWidth < 0.)
     {
         std::cerr << "ResonanceType::ResonanceType: "
-                  << "invalid width value: " << m_width << '\n';
+                  << "invalid width value: " << fWidth << '\n';
         std::exit(EXIT_FAILURE);
     }
 }
@@ -16,5 +16,5 @@ ResonanceType::ResonanceType(std::string name, double mass, int charge, double w
 void ResonanceType::Print() const
 {
     ParticleType::Print();
-    std::cout << "Width: " << m_width << " MeV/c^2\n"; // check units
+    std::cout << "Width: " << fWidth << " MeV/c^2\n"; // check units
 }

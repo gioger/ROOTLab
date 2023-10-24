@@ -1,2 +1,3 @@
 mkdir -p build
-g++ *.cpp $(root-config --glibs --cflags --libs) -Wall -Wextra -o build/ROOTLabch
+g++ *.cpp $(root-config --glibs --cflags --libs) -Wall -Wextra -o build/ROOTLab
+./build/ROOTLab

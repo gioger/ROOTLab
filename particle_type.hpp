@@ -14,9 +14,9 @@ public:
 	virtual void Print() const;
 
 private:
-	std::string fName{}; // we'll ask if it's ok to use std::string
-	double fMass{};
-	int fCharge{};
+	const std::string fName{}; // we'll ask if it's ok to use std::string
+	const double fMass{};
+	const int fCharge{};
 };
 
 #endif // PARTICLE_TYPE_HPP

@@ -12,7 +12,7 @@ public:
 	void Print() const override;
 
 private:
-	double fWidth{};
+	const double fWidth{};
 };
 
 #endif // RESONANCE_TYPE_HPP

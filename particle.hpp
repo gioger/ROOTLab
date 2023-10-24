@@ -6,17 +6,17 @@
 class ParticleType
 {
 private:
-    std::string Name{}; // we'll ask if it's ok to use std::string
-    double fMass{};
-    int fCharge{};
+    std::string m_name{}; // we'll ask if it's ok to use std::string
+    double m_mass{};
+    int m_charge{};
 
 public:
     ParticleType() = default;
     ParticleType(std::string name, double mass, int charge);
 
-    double GetMass() const { return fMass; }
-    int GetCharge() const { return fCharge; }
-    std::string GetName() const { return Name; }
+    double GetMass() const { return m_mass; }
+    int GetCharge() const { return m_charge; }
+    std::string GetName() const { return m_name; }
     void Print() const;
 };
 

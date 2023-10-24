@@ -1,5 +1,5 @@
-#include "particle.hpp"
-#include "resonance.hpp"
+#include "particle_type.hpp"
+#include "resonance_type.hpp"
 #include <iostream>
 
 int main()

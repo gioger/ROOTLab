@@ -1,7 +1,7 @@
 #ifndef RESONANCE_TYPE_HPP
 #define RESONANCE_TYPE_HPP
 
-#include "particle.hpp"
+#include "particle_type.hpp"
 
 class ResonanceType : ParticleType
 {

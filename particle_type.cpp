@@ -1,4 +1,4 @@
-#include "particle.hpp"
+#include "particle_type.hpp"
 
 #include <iostream>
 

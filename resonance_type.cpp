@@ -1,4 +1,4 @@
-#include "resonance.hpp"
+#include "resonance_type.hpp"
 
 #include <iostream>
 

@@ -2,6 +2,11 @@
 
 #include <algorithm>
 
+Particle::Particle(const std::string& name, double px, double py, double pz) : fPx{px}, fPy{py}, fPz{pz}
+{
+	fIndex = FindParticle(name);
+}
+
 int Particle::FindParticle(const std::string& particleName)
 {
 	auto it{

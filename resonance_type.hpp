@@ -3,7 +3,7 @@
 
 #include "particle_type.hpp"
 
-class ResonanceType : ParticleType
+class ResonanceType : public ParticleType
 {
 public:
 	ResonanceType(std::string name, double mass, int charge, double width);

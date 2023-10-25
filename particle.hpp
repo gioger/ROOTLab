@@ -1,25 +1,30 @@
-#ifndef PARTICLE_TYPE_HPP
-#define
+#ifndef PARTICLE_HPP
+#define PARTICLE_HPP
+
+#include "particle_type.hpp"
 
 #include <array>
 #include <iostream>
 #include <memory>
 
-class Particle {
-    public:
-    Particle Particle(std::string name, double px, double py, double pz) : fName{name}, fPx{px}, fPy{py}, fpx{pz} {};
-    Particle Particle(std::string name) : Particle(name, 0, 0, 0);
+class Particle
+{
+public:
+	Particle(std::string name, double px = 0, double py = 0, double pz = 0) : fName{name}, fPx{px}, fPy{py}, fPz{pz} {};
 
-    private:
-    static constexpr int fMaxNumParticleType = 10;
-    static int fNParticleType{};
-    int fIndex{};
-    static std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleType{};
-    int FindParticle(std::string nomeParticella);
+private:
+	static constexpr int fMaxNumParticleType = 10;
+	static std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleType;
 
-    double fPx{};
-    double fPy{};
-    double fPz{};
+	static int fNParticleType;
+
+	int FindParticle(const std::string& particleName);
+
+	int fIndex{};
+
+	double fPx{};
+	double fPy{};
+	double fPz{};
 };
 
 #endif

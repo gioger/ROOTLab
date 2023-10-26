@@ -34,3 +34,18 @@ void Particle::AddParticleType(const std::string& name, double mass, int charge,
 		fParticleType[fNParticleType] = std::make_unique<ResonanceType>(name, mass, charge, width);
 	}
 }
+
+void Particle::SetIndex(int index)
+{
+	if (index < fNParticleType)
+	{
+		std::cerr << "Particle type already existing.\n";
+		std::exit(EXIT_FAILURE);
+	}
+	else
+	{
+		fIndex = index;
+	}
+}
+
+void Particle::SetIndex(const std::string& name) {}

@@ -7,7 +7,6 @@ class ParticleType
 {
 public:
 	ParticleType(std::string name, double mass, int charge);
-	ParticleType& operator=(const ParticleType&) = default;
 
 	double GetMass() const { return fMass; }
 	int GetCharge() const { return fCharge; }

@@ -1,4 +1,5 @@
 #include "particle.hpp"
+#include "resonance_type.hpp"
 
 #include <algorithm>
 
@@ -22,14 +23,14 @@ int Particle::FindParticle(const std::string& particleName)
 	return std::distance(fParticleType.begin(), it); // check if 0 or 1
 }
 
-void Particle::AddParticleType(const std::string& name, double mass, int charge, double width = 0.)
+void Particle::AddParticleType(const std::string& name, double mass, int charge, double width)
 {
 	if (width == 0.)
 	{
-		fParticleType[fNParticleType] = std::make_unique<ParticleType>{name, mass, charge};
+		fParticleType[fNParticleType] = std::make_unique<ParticleType>(name, mass, charge);
 	}
 	else
 	{
-		fParticleType[fNParticleType] = std::make_unique<ResonanceType>{name, mass, charge, width};
+		fParticleType[fNParticleType] = std::make_unique<ResonanceType>(name, mass, charge, width);
 	}
 }

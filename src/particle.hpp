@@ -23,7 +23,7 @@ public:
 	double GetPx() const { return fPx; }
 	double GetPy() const { return fPy; }
 	double GetPz() const { return fPz; }
-	double GetMass() const { return fParticleType[fIndex]->GetMass(); }
+	double GetMass() const { return fParticleTypes[fIndex]->GetMass(); }
 
 	double Energy() const;
 	double InvMass(const Particle& particle) const;
@@ -37,7 +37,7 @@ public:
 
 private:
 	static constexpr size_t fMaxNumParticleType = 10;
-	static inline std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleType{};
+	static inline std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleTypes{};
 
 	static inline size_t fNParticleType{};
 

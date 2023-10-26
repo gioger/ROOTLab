@@ -7,7 +7,7 @@
 void Particle::AddParticleType(std::string name, double mass, int charge, double width)
 {
 
-	fParticleType[fNParticleType] = (width != 0) //
+	fParticleTypes[fNParticleType] = (width != 0) //
 										? std::make_unique<ResonanceType>(std::move(name), mass, charge, width)
 										: std::make_unique<ParticleType>(std::move(name), mass, charge);
 }
@@ -16,7 +16,7 @@ void Particle::PrintParticleType()
 {
 	for (size_t i{}; i < fMaxNumParticleType; ++i)
 	{
-		fParticleType[i]->Print();
+		fParticleTypes[i]->Print();
 	}
 }
 
@@ -27,17 +27,17 @@ Particle::Particle(const std::string& name, double px, double py, double pz) : f
 
 size_t Particle::FindParticle(const std::string& particleName)
 {
-	auto it{std::find_if(fParticleType.begin(), fParticleType.end(), [&](const auto& p) { //
+	auto it{std::find_if(fParticleTypes.begin(), fParticleTypes.end(), [&](const auto& p) { //
 		return p->GetName() == particleName;
 	})};
 
-	if (it == fParticleType.end())
+	if (it == fParticleTypes.end())
 	{
 		std::cerr << "Particle type not found.\n";
 		std::exit(EXIT_FAILURE);
 	}
 
-	return std::distance(fParticleType.begin(), it); // check if 0 or 1
+	return std::distance(fParticleTypes.begin(), it); // check if 0 or 1
 }
 
 void Particle::SetIndex(size_t index)
@@ -60,7 +60,7 @@ void Particle::SetIndex(const std::string& name)
 
 void Particle::PrintParticleData() const
 {
-	const std::string& name{fParticleType[fIndex]->GetName()};
+	const std::string& name{fParticleTypes[fIndex]->GetName()};
 	std::cout << "Particle index: " << fIndex << '\n';
 	std::cout << "Particle name: " << name << '\n';
 	std::cout << "Particle Px: " << fPx << '\n';

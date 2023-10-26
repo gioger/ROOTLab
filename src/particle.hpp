@@ -10,6 +10,8 @@
 class Particle
 {
 public:
+	static void AddParticleType(std::string name, double mass, int charge, double width = 0.);
+
 	Particle(const std::string& name, double px = 0, double py = 0, double pz = 0);
 	void inline static PrintParticleType();
 	void PrintParticle() const;
@@ -32,8 +34,6 @@ public:
 		fPy = py;
 		fPz = pz;
 	}
-
-	static void AddParticleType(const std::string& name, double mass, int charge, double width = 0.);
 
 private:
 	static constexpr int fMaxNumParticleType = 10;

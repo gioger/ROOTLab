@@ -4,6 +4,14 @@
 #include <algorithm>
 #include <cmath>
 
+void Particle::AddParticleType(std::string name, double mass, int charge, double width)
+{
+
+	fParticleType[fNParticleType] = (width != 0) //
+										? std::make_unique<ResonanceType>(std::move(name), mass, charge, width)
+										: std::make_unique<ParticleType>(std::move(name), mass, charge);
+}
+
 Particle::Particle(const std::string& name, double px, double py, double pz) : fPx{px}, fPy{py}, fPz{pz}
 {
 	fIndex = FindParticle(name);
@@ -22,18 +30,6 @@ int Particle::FindParticle(const std::string& particleName)
 	}
 
 	return std::distance(fParticleType.begin(), it); // check if 0 or 1
-}
-
-void Particle::AddParticleType(const std::string& name, double mass, int charge, double width)
-{
-	if (width == 0.)
-	{
-		fParticleType[fNParticleType] = std::make_unique<ParticleType>(name, mass, charge);
-	}
-	else
-	{
-		fParticleType[fNParticleType] = std::make_unique<ResonanceType>(name, mass, charge, width);
-	}
 }
 
 void Particle::SetIndex(int index)

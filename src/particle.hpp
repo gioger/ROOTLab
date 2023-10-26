@@ -11,6 +11,8 @@ class Particle
 {
 public:
 	Particle(const std::string& name, double px = 0, double py = 0, double pz = 0);
+	int GetIndex() const { return fIndex; }
+	void AddParticleType(const ParticleType& particle);
 
 private:
 	static constexpr int fMaxNumParticleType = 10;

@@ -10,7 +10,7 @@ public:
 
 	double GetMass() const { return fMass; }
 	int GetCharge() const { return fCharge; }
-	std::string GetName() const { return fName; }
+	const std::string& GetName() const { return fName; }
 	virtual void Print() const;
 
 private:

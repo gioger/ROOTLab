@@ -5,14 +5,11 @@
 Particle::Particle(const std::string& name, double px, double py, double pz) : fPx{px}, fPy{py}, fPz{pz}
 {
 	fIndex = FindParticle(name);
-
-#include <iostream>
-	std::cout << fIndex << '\n';
 }
 
 int Particle::FindParticle(const std::string& particleName)
 {
-	auto it{std::find_if(fParticleType.begin(), fParticleType.end(), [](auto p) { //
+	auto it{std::find_if(fParticleType.begin(), fParticleType.end(), [&](const auto& p) { //
 		return p->GetName() == particleName;
 	})};
 

@@ -14,9 +14,9 @@ public:
 
 private:
 	static constexpr int fMaxNumParticleType = 10;
-	static std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleType;
+	inline static std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleType{};
 
-	static int fNParticleType; // Check value
+	inline static int fNParticleType{};
 
 	int FindParticle(const std::string& particleName);
 

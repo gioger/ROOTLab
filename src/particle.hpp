@@ -12,7 +12,7 @@ class Particle
 public:
 	Particle(const std::string& name, double px = 0, double py = 0, double pz = 0);
 	int GetIndex() const { return fIndex; }
-	void AddParticleType(const ParticleType& particle);
+	void AddParticleType(const std::string& name, double mass, int charge, double width = 0);
 
 private:
 	static constexpr int fMaxNumParticleType = 10;

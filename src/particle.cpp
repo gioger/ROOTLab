@@ -1,7 +1,6 @@
 #include "particle.hpp"
 
 #include <algorithm>
-#include <utility>
 
 Particle::Particle(const std::string& name, double px, double py, double pz) : fPx{px}, fPy{py}, fPz{pz}
 {
@@ -23,7 +22,14 @@ int Particle::FindParticle(const std::string& particleName)
 	return std::distance(fParticleType.begin(), it); // check if 0 or 1
 }
 
-void Particle::AddParticleType(const ParticleType& particle)
+void Particle::AddParticleType(const std::string& name, double mass, int charge, double width = 0.)
 {
-	*(fParticleType[fNParticleType]) = particle;
+	if (width == 0.)
+	{
+		fParticleType[fNParticleType] = std::make_unique<ParticleType>{name, mass, charge};
+	}
+	else
+	{
+		fParticleType[fNParticleType] = std::make_unique<ResonanceType>{name, mass, charge, width};
+	}
 }

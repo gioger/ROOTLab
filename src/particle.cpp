@@ -14,7 +14,7 @@ void Particle::AddParticleType(std::string name, double mass, int charge, double
 
 void Particle::PrintParticleType()
 {
-	for (int i{}; i < fMaxNumParticleType; ++i)
+	for (size_t i{}; i < fMaxNumParticleType; ++i)
 	{
 		fParticleType[i]->Print();
 	}
@@ -25,7 +25,7 @@ Particle::Particle(const std::string& name, double px, double py, double pz) : f
 	fIndex = FindParticle(name);
 }
 
-int Particle::FindParticle(const std::string& particleName)
+size_t Particle::FindParticle(const std::string& particleName)
 {
 	auto it{std::find_if(fParticleType.begin(), fParticleType.end(), [&](const auto& p) { //
 		return p->GetName() == particleName;
@@ -40,7 +40,7 @@ int Particle::FindParticle(const std::string& particleName)
 	return std::distance(fParticleType.begin(), it); // check if 0 or 1
 }
 
-void Particle::SetIndex(int index)
+void Particle::SetIndex(size_t index)
 {
 	if (index < fNParticleType)
 	{

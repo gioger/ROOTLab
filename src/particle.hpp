@@ -13,11 +13,11 @@ public:
 	static void AddParticleType(std::string name, double mass, int charge, double width = 0.);
 	static void PrintParticleType();
 
-	Particle(const std::string& name, double px = 0, double py = 0, double pz = 0);
+	Particle(const std::string& name, double px = 0., double py = 0., double pz = 0.);
 	void PrintParticleData() const;
 
-	int GetIndex() const { return fIndex; }
-	void SetIndex(int index);
+	size_t GetIndex() const { return fIndex; }
+	void SetIndex(size_t index);
 	void SetIndex(const std::string& name);
 
 	double GetPx() const { return fPx; }
@@ -36,14 +36,14 @@ public:
 	}
 
 private:
-	static constexpr int fMaxNumParticleType = 10;
+	static constexpr size_t fMaxNumParticleType = 10;
 	static inline std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleType{};
 
-	static inline int fNParticleType{};
+	static inline size_t fNParticleType{};
 
-	int FindParticle(const std::string& particleName);
+	size_t FindParticle(const std::string& particleName);
 
-	int fIndex{};
+	size_t fIndex{};
 
 	double fPx{};
 	double fPy{};

@@ -11,9 +11,27 @@ class Particle
 {
 public:
 	Particle(const std::string& name, double px = 0, double py = 0, double pz = 0);
+	void inline static PrintParticleType();
+	void PrintParticle() const;
+
 	int GetIndex() const { return fIndex; }
 	void SetIndex(int index);
 	void SetIndex(const std::string& name);
+
+	double GetPx() const { return fPx; }
+	double GetPy() const { return fPy; }
+	double GetPz() const { return fPz; }
+	double GetMass() const { return fParticleType[fIndex]->GetMass(); }
+
+	double Energy() const;
+	double InvMass(const Particle& particle) const;
+
+	void SetP(double px, double py, double pz)
+	{
+		fPx = px;
+		fPy = py;
+		fPz = pz;
+	}
 
 	static void AddParticleType(const std::string& name, double mass, int charge, double width = 0.);
 

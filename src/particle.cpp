@@ -2,6 +2,7 @@
 #include "resonance_type.hpp"
 
 #include <algorithm>
+#include <cmath>
 
 Particle::Particle(const std::string& name, double px, double py, double pz) : fPx{px}, fPy{py}, fPz{pz}
 {
@@ -51,4 +52,38 @@ void Particle::SetIndex(int index)
 void Particle::SetIndex(const std::string& name)
 {
 	fIndex = FindParticle(name);
+}
+
+void inline Particle::PrintParticleType()
+{
+	for (int i{}; i < fMaxNumParticleType; ++i)
+	{
+		fParticleType[i]->Print();
+	}
+}
+
+void Particle::PrintParticle() const
+{
+	const std::string& name{fParticleType[fIndex]->GetName()};
+	std::cout << "Particle index: " << fIndex << '\n';
+	std::cout << "Particle name: " << name << '\n';
+	std::cout << "Particle Px: " << fPx << '\n';
+	std::cout << "Particle Py: " << fPy << '\n';
+	std::cout << "Particle Pz: " << fPz << '\n';
+}
+
+double Particle::Energy() const
+{
+	const double mass{GetMass()};
+	return {sqrt(mass * mass + fPx * fPx + fPy * fPy + fPz * fPz)};
+}
+
+double Particle::InvMass(const Particle& particle) const
+{
+	const double sumEnergy{Energy() + particle.Energy()};
+	const double sumPx{fPx + particle.fPx};
+	const double sumPy{fPy + particle.fPy};
+	const double sumPz{fPz + particle.fPz};
+
+	return {sqrt(sumEnergy * sumEnergy - sumPx * sumPx - sumPy * sumPy - sumPz * sumPz)};
 }

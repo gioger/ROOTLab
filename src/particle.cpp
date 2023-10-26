@@ -12,6 +12,14 @@ void Particle::AddParticleType(std::string name, double mass, int charge, double
 										: std::make_unique<ParticleType>(std::move(name), mass, charge);
 }
 
+void Particle::PrintParticleType()
+{
+	for (int i{}; i < fMaxNumParticleType; ++i)
+	{
+		fParticleType[i]->Print();
+	}
+}
+
 Particle::Particle(const std::string& name, double px, double py, double pz) : fPx{px}, fPy{py}, fPz{pz}
 {
 	fIndex = FindParticle(name);
@@ -50,15 +58,7 @@ void Particle::SetIndex(const std::string& name)
 	fIndex = FindParticle(name);
 }
 
-void inline Particle::PrintParticleType()
-{
-	for (int i{}; i < fMaxNumParticleType; ++i)
-	{
-		fParticleType[i]->Print();
-	}
-}
-
-void Particle::PrintParticle() const
+void Particle::PrintParticleData() const
 {
 	const std::string& name{fParticleType[fIndex]->GetName()};
 	std::cout << "Particle index: " << fIndex << '\n';

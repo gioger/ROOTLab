@@ -11,10 +11,10 @@ class Particle
 {
 public:
 	static void AddParticleType(std::string name, double mass, int charge, double width = 0.);
+	static void PrintParticleType();
 
 	Particle(const std::string& name, double px = 0, double py = 0, double pz = 0);
-	void inline static PrintParticleType();
-	void PrintParticle() const;
+	void PrintParticleData() const;
 
 	int GetIndex() const { return fIndex; }
 	void SetIndex(int index);
@@ -37,9 +37,9 @@ public:
 
 private:
 	static constexpr int fMaxNumParticleType = 10;
-	inline static std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleType{};
+	static inline std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleType{};
 
-	inline static int fNParticleType{};
+	static inline int fNParticleType{};
 
 	int FindParticle(const std::string& particleName);
 

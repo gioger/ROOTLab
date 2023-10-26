@@ -39,13 +39,16 @@ void Particle::SetIndex(int index)
 {
 	if (index < fNParticleType)
 	{
-		std::cerr << "Particle type already existing.\n";
-		std::exit(EXIT_FAILURE);
+		fIndex = index;
 	}
 	else
 	{
-		fIndex = index;
+		std::cerr << "Particle type already existing.\n";
+		std::exit(EXIT_FAILURE);
 	}
 }
 
-void Particle::SetIndex(const std::string& name) {}
+void Particle::SetIndex(const std::string& name)
+{
+	fIndex = FindParticle(name);
+}

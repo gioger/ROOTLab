@@ -1,15 +1,21 @@
 #include "particle.hpp"
 #include "resonance_type.hpp"
 
-#include <algorithm>
 #include <cmath>
 
 void Particle::AddParticleType(std::string name, double mass, int charge, double width)
 {
+	if (fNParticleType >= fMaxNumParticleType)
+	{
+		std::cerr << "Maximum number of particle types reached.\n";
+		std::exit(EXIT_FAILURE);
+	}
 
 	fParticleTypes[fNParticleType] = (width != 0) //
-										? std::make_unique<ResonanceType>(std::move(name), mass, charge, width)
-										: std::make_unique<ParticleType>(std::move(name), mass, charge);
+										 ? std::make_unique<ResonanceType>(std::move(name), mass, charge, width)
+										 : std::make_unique<ParticleType>(std::move(name), mass, charge);
+
+	++fNParticleType;
 }
 
 void Particle::PrintParticleType()
@@ -27,30 +33,27 @@ Particle::Particle(const std::string& name, double px, double py, double pz) : f
 
 size_t Particle::FindParticle(const std::string& particleName)
 {
-	auto it{std::find_if(fParticleTypes.begin(), fParticleTypes.end(), [&](const auto& p) { //
-		return p->GetName() == particleName;
-	})};
-
-	if (it == fParticleTypes.end())
+	for (size_t i{0}; i < fNParticleType; ++i)
 	{
-		std::cerr << "Particle type not found.\n";
-		std::exit(EXIT_FAILURE);
+		if (fParticleTypes[i]->GetName() == particleName)
+		{
+			return i;
+		}
 	}
 
-	return std::distance(fParticleTypes.begin(), it); // check if 0 or 1
+	std::cerr << "Particle type not found.\n";
+	std::exit(EXIT_FAILURE);
 }
 
 void Particle::SetIndex(size_t index)
 {
-	if (index < fNParticleType)
-	{
-		fIndex = index;
-	}
-	else
+	if (index >= fNParticleType)
 	{
 		std::cerr << "Particle type already existing.\n";
 		std::exit(EXIT_FAILURE);
 	}
+
+	fIndex = index;
 }
 
 void Particle::SetIndex(const std::string& name)
@@ -71,7 +74,7 @@ void Particle::PrintParticleData() const
 double Particle::Energy() const
 {
 	const double mass{GetMass()};
-	return {sqrt(mass * mass + fPx * fPx + fPy * fPy + fPz * fPz)};
+	return {std::sqrt(mass * mass + fPx * fPx + fPy * fPy + fPz * fPz)};
 }
 
 double Particle::InvMass(const Particle& particle) const
@@ -81,5 +84,5 @@ double Particle::InvMass(const Particle& particle) const
 	const double sumPy{fPy + particle.fPy};
 	const double sumPz{fPz + particle.fPz};
 
-	return {sqrt(sumEnergy * sumEnergy - sumPx * sumPx - sumPy * sumPy - sumPz * sumPz)};
+	return {std::sqrt(sumEnergy * sumEnergy - sumPx * sumPx - sumPy * sumPy - sumPz * sumPz)};
 }

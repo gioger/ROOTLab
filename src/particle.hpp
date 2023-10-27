@@ -25,15 +25,15 @@ public:
 	double GetPz() const { return fPz; }
 	double GetMass() const { return fParticleTypes[fIndex]->GetMass(); }
 
-	double Energy() const;
-	double InvMass(const Particle& particle) const;
-
 	void SetP(double px, double py, double pz)
 	{
 		fPx = px;
 		fPy = py;
 		fPz = pz;
 	}
+
+	double Energy() const;
+	double InvMass(const Particle& particle) const;
 
 private:
 	static constexpr size_t fMaxNumParticleType = 10;

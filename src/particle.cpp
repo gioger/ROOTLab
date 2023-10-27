@@ -49,7 +49,7 @@ void Particle::SetIndex(size_t index)
 {
 	if (index >= fNParticleType)
 	{
-		std::cerr << "Particle type already existing.\n";
+		std::cerr << "Invalid index.\n";
 		std::exit(EXIT_FAILURE);
 	}
 

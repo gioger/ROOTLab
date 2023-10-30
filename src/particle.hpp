@@ -36,7 +36,7 @@ public:
 	double InvMass(const Particle& particle) const;
 
 private:
-	static constexpr size_t fMaxNumParticleType = 10;
+	static constexpr size_t fMaxNumParticleType{10};
 	static inline std::array<std::unique_ptr<ParticleType>, fMaxNumParticleType> fParticleTypes{};
 
 	static inline size_t fNParticleType{};

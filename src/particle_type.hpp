@@ -7,6 +7,7 @@ class ParticleType
 {
 public:
 	ParticleType(std::string name, double mass, int charge);
+	virtual ~ParticleType() = default;
 
 	double GetMass() const { return fMass; }
 	int GetCharge() const { return fCharge; }
@@ -14,7 +15,7 @@ public:
 	virtual void Print() const;
 
 private:
-	const std::string fName{}; // we'll ask if it's ok to use std::string
+	const std::string fName{};
 	const double fMass{};
 	const int fCharge{};
 };

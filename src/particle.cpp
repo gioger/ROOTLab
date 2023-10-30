@@ -74,7 +74,7 @@ void Particle::PrintParticleData() const
 double Particle::Energy() const
 {
 	const double mass{GetMass()};
-	return {std::sqrt(mass * mass + fPx * fPx + fPy * fPy + fPz * fPz)};
+	return std::sqrt(mass * mass + fPx * fPx + fPy * fPy + fPz * fPz);
 }
 
 double Particle::InvMass(const Particle& particle) const
@@ -84,5 +84,5 @@ double Particle::InvMass(const Particle& particle) const
 	const double sumPy{fPy + particle.fPy};
 	const double sumPz{fPz + particle.fPz};
 
-	return {std::sqrt(sumEnergy * sumEnergy - sumPx * sumPx - sumPy * sumPy - sumPz * sumPz)};
+	return std::sqrt(sumEnergy * sumEnergy - sumPx * sumPx - sumPy * sumPy - sumPz * sumPz);
 }

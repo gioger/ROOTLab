@@ -18,7 +18,7 @@ void Particle::AddParticleType(std::string name, double mass, int charge, double
 	++fNParticleType;
 }
 
-void Particle::PrintParticleType()
+void Particle::PrintParticleTypes()
 {
 	for (size_t i{}; i < fMaxNumParticleType; ++i)
 	{

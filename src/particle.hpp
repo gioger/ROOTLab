@@ -11,7 +11,7 @@ class Particle
 {
 public:
 	static void AddParticleType(std::string name, double mass, int charge, double width = 0.);
-	static void PrintParticleType();
+	static void PrintParticleTypes();
 
 	Particle(const std::string& name, double px = 0., double py = 0., double pz = 0.);
 	void PrintParticleData() const;

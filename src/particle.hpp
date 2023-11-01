@@ -34,7 +34,7 @@ public:
 
 	double Energy() const;
 	double InvMass(const Particle& particle) const;
-	int Decay2Body(Particle& dau1, Particle& dau2) const;
+	void Decay2Body(Particle& dau1, Particle& dau2) const;
 
 private:
 	static constexpr size_t fMaxNumParticleType{10};
@@ -42,8 +42,9 @@ private:
 
 	static inline size_t fNParticleType{};
 
-	void Boost(double bx, double by, double bz);
 	size_t FindParticle(const std::string& particleName);
+
+	void Boost(double bx, double by, double bz);
 
 	size_t fIndex{};
 

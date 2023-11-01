@@ -100,8 +100,8 @@ int Particle::Decay2Body(Particle& dau1, Particle& dau2) const
 	double massDau1 = dau1.GetMass();
 	double massDau2 = dau2.GetMass();
 
-	if (fIndex > -1) // prima fIParticle
-	{				 // add width effect
+	if (static_cast<int>(fIndex) > -1) // prima fIParticle
+	{								   // add width effect
 
 		// gaussian random numbers
 

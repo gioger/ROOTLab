@@ -13,6 +13,7 @@ public:
 	int GetCharge() const { return fCharge; }
 	const std::string& GetName() const { return fName; }
 	virtual void Print() const;
+	virtual double GetWidth() const { return 0; };
 
 private:
 	const std::string fName{};

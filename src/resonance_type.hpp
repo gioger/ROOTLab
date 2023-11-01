@@ -9,7 +9,7 @@ public:
 	ResonanceType(std::string name, double mass, int charge, double width = 0);
 	~ResonanceType() override = default;
 
-	double GetWidth() const { return fWidth; }
+	double GetWidth() const override { return fWidth; }
 	void Print() const override;
 
 private:

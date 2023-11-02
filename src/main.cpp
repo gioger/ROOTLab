@@ -165,7 +165,7 @@ int main()
 			for (size_t j{i + 1}; j < eventParticles.size(); j++)
 			{
 				// const size_t p2Index{eventParticles[j].GetIndex()};
-				if (eventParticles[j] == "K*")
+				if (eventParticles[j].GetName() == "K*")
 				{
 					continue;
 				}
@@ -175,7 +175,7 @@ int main()
 				hInvMass->Fill(invMass);
 
 				// If the product of the charges is >0, the sign is the same; if it's opposite, the sign is discordant
-				if (eventParticles[i].GetCharge * eventParticles[j].GetCharge() > 0)
+				if (eventParticles[i].GetCharge() * eventParticles[j].GetCharge() > 0)
 				{
 					hInvMassSameSign->Fill(invMass);
 				}
@@ -192,7 +192,7 @@ int main()
 				if ((eventParticles[i].GetName() == "pi+" && eventParticles[j].GetName() == "K-") ||
 					(eventParticles[i].GetName() == "K-" && eventParticles[j].GetName() == "pi+") ||
 					(eventParticles[i].GetName() == "pi-" && eventParticles[j].GetName() == "K+") ||
-					(eventParticles[i].GetName() == "K+" && eventParticles[j].GetName() == "pi-") ||)
+					(eventParticles[i].GetName() == "K+" && eventParticles[j].GetName() == "pi-"))
 				{
 					hInvMassPiKDisc->Fill(invMass);
 				}
@@ -201,7 +201,7 @@ int main()
 				if ((eventParticles[i].GetName() == "pi+" && eventParticles[j].GetName() == "K+") ||
 					(eventParticles[i].GetName() == "K+" && eventParticles[j].GetName() == "pi+") ||
 					(eventParticles[i].GetName() == "pi-" && eventParticles[j].GetName() == "K-") ||
-					(eventParticles[i].GetName() == "K-" && eventParticles[j].GetName() == "pi-") ||)
+					(eventParticles[i].GetName() == "K-" && eventParticles[j].GetName() == "pi-"))
 				{
 					hInvMassPiKSame->Fill(invMass);
 				}

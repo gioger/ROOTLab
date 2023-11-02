@@ -39,7 +39,7 @@ int main()
 
 	auto* hImpulse{new TH1D{"hImpulse", "Impulse", 100, 0., 10.}};
 	auto* hTransverseImpulse{new TH1D{"hTransverseImpulse", "Transverse impulse", 100, 0., 10.}};
-	auto* hEnergy{new TH1D{"hEnergy", "Energy", 100, 0., 10.}};
+	auto* hEnergy{new TH1D{"hEnergy", "Energy", 500, 0., 10.}};
 
 	auto* hInvMass{new TH1D{"hInvMass", "Invariant mass", 100, 0., 2.}};
 	auto* hInvMassSameSign{new TH1D{"hInvMassSameSign", "Invariant mass (same sign)", 100, 0., 2.}};

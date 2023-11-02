@@ -34,19 +34,19 @@ int main()
 	hParticleTypes->GetXaxis()->SetBinLabel(6, "p-");
 	hParticleTypes->GetXaxis()->SetBinLabel(7, "K*");
 
-	auto* hPhi{new TH1D{"hPhi", "Phi", 100, 0., TMath::TwoPi()}};
-	auto* hTheta{new TH1D{"hTheta", "Theta", 100, 0., TMath::Pi()}};
+	auto* hPhi{new TH1D{"hPhi", "Phi", 500, 0., TMath::TwoPi()}};
+	auto* hTheta{new TH1D{"hTheta", "Theta", 500, 0., TMath::Pi()}};
 
-	auto* hImpulse{new TH1D{"hImpulse", "Impulse", 100, 0., 10.}};
+	auto* hImpulse{new TH1D{"hImpulse", "Impulse", 500, 0., 10.}};
 	auto* hTransverseImpulse{new TH1D{"hTransverseImpulse", "Transverse impulse", 100, 0., 10.}};
-	auto* hEnergy{new TH1D{"hEnergy", "Energy", 100, 0., 10.}};
+	auto* hEnergy{new TH1D{"hEnergy", "Energy", 500, 0., 10.}};
 
-	auto* hInvMass{new TH1D{"hInvMass", "Invariant mass", 100, 0., 2.}};
-	auto* hInvMassSameSign{new TH1D{"hInvMassSameSign", "Invariant mass (same sign)", 100, 0., 2.}};
-	auto* hInvMassDiscSign{new TH1D{"hInvMassDiscSign", "Invariant mass (discordant sign)", 100, 0., 2.}};
-	auto* hInvMassPiKSame{new TH1D{"hInvMassPiKSame", "Invariant mass (pi-K same sign)", 100, 0., 2.}};
-	auto* hInvMassPiKDisc{new TH1D{"hInvMassPiKDisc", "Invariant mass (pi-K discordant sign)", 100, 0., 2.}};
-	auto* hInvMassChildren{new TH1D{"hInvMassChildren", "Invariant mass (children)", 100, 0., 2.}};
+	auto* hInvMass{new TH1D{"hInvMass", "Invariant mass", 500, 0., 2.}};
+	auto* hInvMassSameSign{new TH1D{"hInvMassSameSign", "Invariant mass (same sign)", 500, 0., 2.}};
+	auto* hInvMassDiscSign{new TH1D{"hInvMassDiscSign", "Invariant mass (discordant sign)", 500, 0., 2.}};
+	auto* hInvMassPiKSame{new TH1D{"hInvMassPiKSame", "Invariant mass (pi-K same sign)", 500, 0., 2.}};
+	auto* hInvMassPiKDisc{new TH1D{"hInvMassPiKDisc", "Invariant mass (pi-K discordant sign)", 500, 0., 2.}};
+	auto* hInvMassChildren{new TH1D{"hInvMassChildren", "Invariant mass (children)", 500, 0., 2.}};
 
 	hInvMassSameSign->Sumw2();
 	hInvMassDiscSign->Sumw2();
@@ -54,9 +54,9 @@ int main()
 	hInvMassPiKDisc->Sumw2();
 
 	auto* hInvMassSubAll{new TH1D{
-		"hInvMassSubAll", "Invariant mass (difference between same & discordant signs - All particles)", 100, 0., 2.}};
+		"hInvMassSubAll", "Invariant mass (difference between same & discordant signs - All particles)", 500, 0., 2.}};
 	auto* hInvMassSubPiK{
-		new TH1D{"hInvMassSubPiK", "Invariant mass (difference between same & discordant signs - pi-K)", 100, 0., 2.}};
+		new TH1D{"hInvMassSubPiK", "Invariant mass (difference between same & discordant signs - pi-K)", 500, 0., 2.}};
 
 	constexpr size_t numEvents{100'000};
 	constexpr size_t numParts{100};
@@ -127,7 +127,7 @@ int main()
 
 		for (const auto& p : eventParticles)
 		{
-			if (p.GetIndex() == 6) // K*
+			if (p.GetName() == "K*")
 			{
 				const double x{gRandom->Uniform()};
 
@@ -145,26 +145,23 @@ int main()
 					p2.SetIndex("K+");
 				}
 
-				p.Decay2Body(p1, p2); // Shuold we remove K*?
+				p.Decay2Body(p1, p2);
 
 				eventParticles.push_back(p1);
 				eventParticles.push_back(p2);
+				// K* must not be removed from the eventParticles vector
 			}
 		}
 
-		auto isEven{[](size_t i) { return i % 2 == 0; }};
-
 		for (size_t i{0}; i < eventParticles.size(); i++)
 		{
-			const size_t p1Index{eventParticles[i].GetIndex()};
-			if (p1Index == 6)
+			if (eventParticles[i].GetName() == "K*")
 			{
 				continue;
 			}
 			for (size_t j{i + 1}; j < eventParticles.size(); j++)
 			{
-				const size_t p2Index{eventParticles[j].GetIndex()};
-				if (p2Index == 6)
+				if (eventParticles[j].GetName() == "K*")
 				{
 					continue;
 				}
@@ -173,25 +170,34 @@ int main()
 
 				hInvMass->Fill(invMass);
 
-				// If the sum of the indices is even, the sign is the same, otherwise it is opposite
-				if (isEven(p1Index + p2Index))
+				// If the product of the charges is >0, the sign is the same; if it's opposite, the sign is discordant
+				if (eventParticles[i].GetCharge() * eventParticles[j].GetCharge() > 0)
 				{
 					hInvMassSameSign->Fill(invMass);
 				}
-				else
+				else if (eventParticles[i].GetCharge() * eventParticles[j].GetCharge() < 0)
 				{
 					hInvMassDiscSign->Fill(invMass);
 				}
+				else
+				{
+					std::cerr << "A particle with no charge was entered" << std::endl;
+				}
 
-				// if the sum of the indices is 3, the particles are pi-K, with opposite signs
-				if (p1Index + p2Index == 3)
+				// check if the particles are pi-K, with opposite signs
+				if ((eventParticles[i].GetName() == "pi+" && eventParticles[j].GetName() == "K-") ||
+					(eventParticles[i].GetName() == "K-" && eventParticles[j].GetName() == "pi+") ||
+					(eventParticles[i].GetName() == "pi-" && eventParticles[j].GetName() == "K+") ||
+					(eventParticles[i].GetName() == "K+" && eventParticles[j].GetName() == "pi-"))
 				{
 					hInvMassPiKDisc->Fill(invMass);
 				}
 
 				// check if the particles are pi-K, with the same sign
-				if ((p1Index == 0 && p2Index == 2) || (p1Index == 2 && p2Index == 0) ||
-					(p1Index == 1 && p2Index == 3) || (p1Index == 3 && p2Index == 1))
+				if ((eventParticles[i].GetName() == "pi+" && eventParticles[j].GetName() == "K+") ||
+					(eventParticles[i].GetName() == "K+" && eventParticles[j].GetName() == "pi+") ||
+					(eventParticles[i].GetName() == "pi-" && eventParticles[j].GetName() == "K-") ||
+					(eventParticles[i].GetName() == "K-" && eventParticles[j].GetName() == "pi-"))
 				{
 					hInvMassPiKSame->Fill(invMass);
 				}

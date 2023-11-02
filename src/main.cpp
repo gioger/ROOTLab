@@ -127,7 +127,7 @@ int main()
 
 		for (const auto& p : eventParticles)
 		{
-			if (p.GetIndex() == 6) // K*
+			if (p.GetName() == "K*")
 			{
 				const double x{gRandom->Uniform()};
 
@@ -145,10 +145,11 @@ int main()
 					p2.SetIndex("K+");
 				}
 
-				p.Decay2Body(p1, p2); // Shuold we remove K*?
+				p.Decay2Body(p1, p2);
 
 				eventParticles.push_back(p1);
 				eventParticles.push_back(p2);
+				// K* must not be removed from the eventParticles vector
 			}
 		}
 
@@ -156,15 +157,15 @@ int main()
 
 		for (size_t i{0}; i < eventParticles.size(); i++)
 		{
-			const size_t p1Index{eventParticles[i].GetIndex()};
-			if (p1Index == 6)
+			// const size_t p1Index{eventParticles[i].GetIndex()};
+			if (eventParticles[i].GetName() == "K*")
 			{
 				continue;
 			}
 			for (size_t j{i + 1}; j < eventParticles.size(); j++)
 			{
-				const size_t p2Index{eventParticles[j].GetIndex()};
-				if (p2Index == 6)
+				// const size_t p2Index{eventParticles[j].GetIndex()};
+				if (eventParticles[j] == "K*")
 				{
 					continue;
 				}
@@ -173,25 +174,34 @@ int main()
 
 				hInvMass->Fill(invMass);
 
-				// If the sum of the indices is even, the sign is the same, otherwise it is opposite
-				if (isEven(p1Index + p2Index))
+				// If the product of the charges is >0, the sign is the same; if it's opposite, the sign is discordant
+				if (eventParticles[i].GetCharge * eventParticles[j].GetCharge() > 0)
 				{
 					hInvMassSameSign->Fill(invMass);
 				}
-				else
+				else if (eventParticles[i].GetCharge() * eventParticles[j].GetCharge() < 0)
 				{
 					hInvMassDiscSign->Fill(invMass);
 				}
+				else
+				{
+					std::cerr << "A particle with no charge was entered" << std::endl;
+				}
 
-				// if the sum of the indices is 3, the particles are pi-K, with opposite signs
-				if (p1Index + p2Index == 3)
+				// check if the particles are pi-K, with opposite signs
+				if ((eventParticles[i].GetName() == "pi+" && eventParticles[j].GetName() == "K-") ||
+					(eventParticles[i].GetName() == "K-" && eventParticles[j].GetName() == "pi+") ||
+					(eventParticles[i].GetName() == "pi-" && eventParticles[j].GetName() == "K+") ||
+					(eventParticles[i].GetName() == "K+" && eventParticles[j].GetName() == "pi-") ||)
 				{
 					hInvMassPiKDisc->Fill(invMass);
 				}
 
 				// check if the particles are pi-K, with the same sign
-				if ((p1Index == 0 && p2Index == 2) || (p1Index == 2 && p2Index == 0) ||
-					(p1Index == 1 && p2Index == 3) || (p1Index == 3 && p2Index == 1))
+				if ((eventParticles[i].GetName() == "pi+" && eventParticles[j].GetName() == "K+") ||
+					(eventParticles[i].GetName() == "K+" && eventParticles[j].GetName() == "pi+") ||
+					(eventParticles[i].GetName() == "pi-" && eventParticles[j].GetName() == "K-") ||
+					(eventParticles[i].GetName() == "K-" && eventParticles[j].GetName() == "pi-") ||)
 				{
 					hInvMassPiKSame->Fill(invMass);
 				}

@@ -153,11 +153,8 @@ int main()
 			}
 		}
 
-		auto isEven{[](size_t i) { return i % 2 == 0; }};
-
 		for (size_t i{0}; i < eventParticles.size(); i++)
 		{
-			// const size_t p1Index{eventParticles[i].GetIndex()};
 			if (eventParticles[i].GetName() == "K*")
 			{
 				continue;

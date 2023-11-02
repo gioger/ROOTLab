@@ -14,6 +14,7 @@ public:
 	static void PrintParticleTypes();
 
 	Particle(const std::string& name, double px = 0., double py = 0., double pz = 0.);
+	Particle() = default;
 	void PrintParticleData() const;
 
 	size_t GetIndex() const { return fIndex; }
@@ -34,6 +35,7 @@ public:
 
 	double Energy() const;
 	double InvMass(const Particle& particle) const;
+	void Decay2Body(Particle& dau1, Particle& dau2) const;
 
 private:
 	static constexpr size_t fMaxNumParticleType{10};
@@ -42,6 +44,8 @@ private:
 	static inline size_t fNParticleType{};
 
 	size_t FindParticle(const std::string& particleName);
+
+	void Boost(double bx, double by, double bz);
 
 	size_t fIndex{};
 

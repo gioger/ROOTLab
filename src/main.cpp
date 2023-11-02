@@ -210,6 +210,7 @@ int main()
 
 	auto* outFile{TFile::Open("histos.root", "RECREATE")};
 
+	hParticleTypes->Write();
 	hPhi->Write();
 	hTheta->Write();
 	hImpulse->Write();

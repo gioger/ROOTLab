@@ -14,6 +14,7 @@ public:
 	static void PrintParticleTypes();
 
 	Particle(const std::string& name, double px = 0., double py = 0., double pz = 0.);
+	Particle() = default;
 	void PrintParticleData() const;
 
 	size_t GetIndex() const { return fIndex; }

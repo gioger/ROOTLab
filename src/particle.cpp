@@ -113,7 +113,7 @@ void Particle::Decay2Body(Particle& dau1, Particle& dau2) const
 		std::exit(EXIT_FAILURE + 1);
 	}
 
-	const double pout{std::sqrt((massMot * massMot - (massDau1 + massDau2) * (massDau1 + massDau2)) *
+	const double pOut{std::sqrt((massMot * massMot - (massDau1 + massDau2) * (massDau1 + massDau2)) *
 								(massMot * massMot - (massDau1 - massDau2) * (massDau1 - massDau2))) /
 					  massMot * 0.5};
 
@@ -127,8 +127,8 @@ void Particle::Decay2Body(Particle& dau1, Particle& dau2) const
 	const double sinPhi{std::sin(phi)};
 	const double cosPhi{std::cos(phi)};
 
-	dau1.SetP(pout * sinTheta * cosPhi, pout * sinTheta * sinPhi, pout * cosTheta);
-	dau2.SetP(-pout * sinTheta * cosPhi, -pout * sinTheta * sinPhi, -pout * cosTheta);
+	dau1.SetP(pOut * sinTheta * cosPhi, pOut * sinTheta * sinPhi, pOut * cosTheta);
+	dau2.SetP(-pOut * sinTheta * cosPhi, -pOut * sinTheta * sinPhi, -pOut * cosTheta);
 
 	const double energy{std::sqrt(fPx * fPx + fPy * fPy + fPz * fPz + massMot * massMot)};
 

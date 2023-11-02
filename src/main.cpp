@@ -48,6 +48,16 @@ int main()
 	auto* hInvMassPiKDisc{new TH1D{"hInvMassPiKDisc", "Invariant mass (pi-K discordant sign)", 100, 0., 2.}};
 	auto* hInvMassChildren{new TH1D{"hInvMassChildren", "Invariant mass (children)", 100, 0., 2.}};
 
+	hInvMassSameSign->Sumw2();
+	hInvMassDiscSign->Sumw2();
+	hInvMassPiKSame->Sumw2();
+	hInvMassPiKDisc->Sumw2();
+
+	auto* hInvMassSubAll{new TH1D{
+		"hInvMassSubAll", "Invariant mass (difference between same & discordant signs - All particles)", 100, 0., 2.}};
+	auto* hInvMassSubPiK{
+		new TH1D{"hInvMassSubPiK", "Invariant mass (difference between same & discordant signs - pi-K)", 100, 0., 2.}};
+
 	constexpr size_t numEvents{100'000};
 	constexpr size_t numParts{100};
 
@@ -195,6 +205,9 @@ int main()
 		}
 	}
 
+	hInvMassSubAll->Add(hInvMassDiscSign, hInvMassSameSign, 1., -1.);
+	hInvMassSubPiK->Add(hInvMassPiKDisc, hInvMassPiKSame, 1., -1.);
+
 	auto* outFile{TFile::Open("histos.root", "RECREATE")};
 
 	hPhi->Write();
@@ -208,6 +221,8 @@ int main()
 	hInvMassPiKSame->Write();
 	hInvMassPiKDisc->Write();
 	hInvMassChildren->Write();
+	hInvMassSubAll->Write();
+	hInvMassSubPiK->Write();
 
 	outFile->Close();
 }

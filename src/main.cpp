@@ -195,7 +195,7 @@ int main()
 		}
 	}
 
-	auto* outFile{TFile::Open("build/histos.root", "RECREATE")};
+	auto* outFile{TFile::Open("histos.root", "RECREATE")};
 
 	hPhi->Write();
 	hTheta->Write();

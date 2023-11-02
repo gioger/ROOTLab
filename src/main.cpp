@@ -161,7 +161,6 @@ int main()
 			}
 			for (size_t j{i + 1}; j < eventParticles.size(); j++)
 			{
-				// const size_t p2Index{eventParticles[j].GetIndex()};
 				if (eventParticles[j].GetName() == "K*")
 				{
 					continue;

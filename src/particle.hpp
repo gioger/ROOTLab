@@ -26,6 +26,9 @@ public:
 	double GetPz() const { return fPz; }
 	double GetMass() const { return fParticleTypes[fIndex]->GetMass(); }
 
+	int GetCharge() const { return fParticleTypes[fIndex]->GetCharge(); }
+	const std::string& GetName() const { return fParticleTypes[fIndex]->GetName(); }
+
 	void SetP(double px, double py, double pz)
 	{
 		fPx = px;

@@ -129,4 +129,28 @@ void histos()
 		canvas->Print((std::string{"build/C/"} + canvas->GetName() + ".C").c_str());
 		canvas->Print((std::string{"build/root/"} + canvas->GetName() + ".root").c_str());
 	}
+
+	TCanvas* particles = new TCanvas{"particles", "Particle parameters", 800, 600};
+	particles->Divide(2, 2);
+	particles->cd(1);
+	hParticleTypes->Draw();
+	particles->cd(2);
+	hImpulse->Draw();
+	particles->cd(3);
+	hTheta->Draw();
+	fUnifTheta->Draw("SAME");
+	particles->cd(4);
+	hPhi->Draw();
+	fUnifPhi->Draw("SAME");
+
+	TCanvas* invMass = new TCanvas{"invMass", "Invariant masses", 800, 600};
+	invMass->Divide(1, 3);
+	invMass->cd(1);
+	hInvMassChildren->Draw();
+	invMass->cd(2);
+	hInvMassSubAll->Draw();
+	fGausAll->Draw("SAME");
+	invMass->cd(3);
+	hInvMassSubPiK->Draw();
+	fGausPiK->Draw("SAME");
 }

@@ -9,6 +9,8 @@ g++ $files $(root-config --glibs --cflags --libs) -Wall -Wextra -o ../build/ROOT
 
 cd ../build
 
+mkdir -p pdf
+
 echo "Running..."
 
 ./ROOTLab

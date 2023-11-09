@@ -1,6 +1,8 @@
+#include <TCanvas.h>
 #include <TF1.h>
 #include <TFile.h>
 #include <TH1.h>
+#include <TROOT.h>
 #include <TStyle.h>
 
 #include <array>
@@ -36,8 +38,6 @@ void histos()
 				  << hParticleTypes->GetBinError(i + 1) << '\n';
 	}
 
-	gStyle->SetOptFit(1111);
-
 	TF1* fUnifTheta{new TF1{"fUnifTheta", "[0]", 0., TMath::Pi()}};
 	fUnifTheta->SetParameter(0, 20'000);
 	hTheta->Fit(fUnifTheta, "QN");
@@ -64,7 +64,7 @@ void histos()
 	std::cout << "Impulse chi2 prob: " << fExpImpulse->GetProb() << '\n';
 
 	TF1* fGaus{new TF1{"fGaus", "gausn(4)", 0., 5.}};
-	fGaus->SetParameter(4, 1000);
+	fGaus->SetParameter(4, 800.);
 	fGaus->SetParameter(5, 0.9);
 	fGaus->SetParameter(6, 0.05);
 	hInvMassSubAll->Fit(fGaus, "QN");
@@ -76,7 +76,7 @@ void histos()
 	std::cout << "GausAll chi2/NDF: " << fGaus->GetChisquare() / fGaus->GetNDF() << '\n';
 	std::cout << "GausAll chi2 prob: " << fGaus->GetProb() << '\n';
 
-	hInvMassSubPiK->Fit(fGaus, "Q");
+	hInvMassSubPiK->Fit(fGaus, "QN");
 	for (int i{4}; i < 7; ++i)
 	{
 		std::cout << "GausPiK fit parameter " << i << ": " << fGaus->GetParameter(i) << " +/- " << fGaus->GetParError(i)
@@ -84,4 +84,40 @@ void histos()
 	}
 	std::cout << "GausPiK chi2/NDF: " << fGaus->GetChisquare() / fGaus->GetNDF() << '\n';
 	std::cout << "GausPiK chi2 prob: " << fGaus->GetProb() << '\n';
+
+	std::array<TCanvas*, 14> canvases;
+	gROOT->SetBatch(kTRUE);
+	canvases[0] = new TCanvas{"cParticleTypes", "Particle types", 800, 600};
+	hParticleTypes->Draw();
+	canvases[1] = new TCanvas{"cPhi", "Phi", 800, 600};
+	hPhi->Draw();
+	canvases[2] = new TCanvas{"cTheta", "Theta", 800, 600};
+	hTheta->Draw();
+	canvases[3] = new TCanvas{"cImpulse", "Impulse", 800, 600};
+	hImpulse->Draw();
+	canvases[4] = new TCanvas{"cTransverseImpulse", "Transverse impulse", 800, 600};
+	hTransverseImpulse->Draw();
+	canvases[5] = new TCanvas{"cEnergy", "Energy", 800, 600};
+	hEnergy->Draw();
+	canvases[6] = new TCanvas{"cInvMass", "Invariant mass", 800, 600};
+	hInvMass->Draw();
+	canvases[7] = new TCanvas{"cInvMassSameSign", "Invariant mass same sign", 800, 600};
+	hInvMassSameSign->Draw();
+	canvases[8] = new TCanvas{"cInvMassDiscSign", "Invariant mass disc sign", 800, 600};
+	hInvMassDiscSign->Draw();
+	canvases[9] = new TCanvas{"cInvMassPiKSame", "Invariant mass pi K same", 800, 600};
+	hInvMassPiKSame->Draw();
+	canvases[10] = new TCanvas{"cInvMassPiKDisc", "Invariant mass pi K disc", 800, 600};
+	hInvMassPiKDisc->Draw();
+	canvases[11] = new TCanvas{"cInvMassChildren", "Invariant mass children", 800, 600};
+	hInvMassChildren->Draw();
+	canvases[12] = new TCanvas{"cInvMassSubAll", "Invariant mass sub all", 800, 600};
+	hInvMassSubAll->Draw();
+	canvases[13] = new TCanvas{"cInvMassSubPiK", "Invariant mass sub pi K", 800, 600};
+	hInvMassSubPiK->Draw();
+
+	for (auto* canvas : canvases)
+	{
+		canvas->Print((std::string{"build/pdf/"} + canvas->GetName() + ".pdf").c_str());
+	}
 }

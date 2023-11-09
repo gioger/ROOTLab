@@ -37,9 +37,9 @@ int main()
 	auto* hPhi{new TH1D{"hPhi", "Phi", 500, 0., TMath::TwoPi()}};
 	auto* hTheta{new TH1D{"hTheta", "Theta", 500, 0., TMath::Pi()}};
 
-	auto* hImpulse{new TH1D{"hImpulse", "Impulse", 500, 0., 10.}};
+	auto* hImpulse{new TH1D{"hImpulse", "Impulse", 500, 0., 7.}};
 	auto* hTransverseImpulse{new TH1D{"hTransverseImpulse", "Transverse impulse", 100, 0., 10.}};
-	auto* hEnergy{new TH1D{"hEnergy", "Energy", 500, 0., 10.}};
+	auto* hEnergy{new TH1D{"hEnergy", "Energy", 500, 0., 6.}};
 
 	auto* hInvMass{new TH1D{"hInvMass", "Invariant mass", 500, 0., 2.}};
 	auto* hInvMassSameSign{new TH1D{"hInvMassSameSign", "Invariant mass (same sign)", 500, 0., 2.}};

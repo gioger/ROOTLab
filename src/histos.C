@@ -1,5 +1,7 @@
+#include <TF1.h>
 #include <TFile.h>
 #include <TH1.h>
+#include <TStyle.h>
 
 #include <array>
 #include <iostream>
@@ -51,7 +53,8 @@ void histos()
 	std::cout << "Phi chi2 prob: " << fUnifPhi->GetProb() << '\n';
 
 	TF1* fExpImpulse{new TF1{"fExpImpulse", "expo(2)", 0., 5.}};
-	fExpImpulse->SetParameter(2, 1.);
+	fExpImpulse->SetParameter(2., 1.);
+	fExpImpulse->SetParameter(3., 1.);
 	hImpulse->Fit(fExpImpulse, "QN");
 	std::cout << "Impulse fit amplitude: " << fExpImpulse->GetParameter(2) << " +/- " << fExpImpulse->GetParError(2)
 			  << '\n';
@@ -61,8 +64,10 @@ void histos()
 	std::cout << "Impulse chi2 prob: " << fExpImpulse->GetProb() << '\n';
 
 	TF1* fGausAll{new TF1{"fGausAll", "gausn(4)", 0., 5.}};
-	fGausAll->SetParameters(1., 0.9, 0.05);
-	hInvMassSubAll->Fit(fGausAll, "Q");
+	fGausAll->SetParameter(4, 1000);
+	fGausAll->SetParameter(5, 0.9);
+	fGausAll->SetParameter(6, 0.05);
+	hInvMassSubAll->Fit(fGausAll, "QN");
 	for (int i{4}; i < 7; ++i)
 	{
 		std::cout << "GausAll fit parameter " << i << ": " << fGausAll->GetParameter(i) << " +/- "

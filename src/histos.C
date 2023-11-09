@@ -63,16 +63,25 @@ void histos()
 	std::cout << "Impulse chi2/NDF: " << fExpImpulse->GetChisquare() / fExpImpulse->GetNDF() << '\n';
 	std::cout << "Impulse chi2 prob: " << fExpImpulse->GetProb() << '\n';
 
-	TF1* fGausAll{new TF1{"fGausAll", "gausn(4)", 0., 5.}};
-	fGausAll->SetParameter(4, 1000);
-	fGausAll->SetParameter(5, 0.9);
-	fGausAll->SetParameter(6, 0.05);
-	hInvMassSubAll->Fit(fGausAll, "QN");
+	TF1* fGaus{new TF1{"fGaus", "gausn(4)", 0., 5.}};
+	fGaus->SetParameter(4, 1000);
+	fGaus->SetParameter(5, 0.9);
+	fGaus->SetParameter(6, 0.05);
+	hInvMassSubAll->Fit(fGaus, "QN");
 	for (int i{4}; i < 7; ++i)
 	{
-		std::cout << "GausAll fit parameter " << i << ": " << fGausAll->GetParameter(i) << " +/- "
-				  << fGausAll->GetParError(i) << '\n';
+		std::cout << "GausAll fit parameter " << i << ": " << fGaus->GetParameter(i) << " +/- " << fGaus->GetParError(i)
+				  << '\n';
 	}
-	std::cout << "GausAll chi2/NDF: " << fGausAll->GetChisquare() / fGausAll->GetNDF() << '\n';
-	std::cout << "GausAll chi2 prob: " << fGausAll->GetProb() << '\n';
+	std::cout << "GausAll chi2/NDF: " << fGaus->GetChisquare() / fGaus->GetNDF() << '\n';
+	std::cout << "GausAll chi2 prob: " << fGaus->GetProb() << '\n';
+
+	hInvMassSubPiK->Fit(fGaus, "Q");
+	for (int i{4}; i < 7; ++i)
+	{
+		std::cout << "GausPiK fit parameter " << i << ": " << fGaus->GetParameter(i) << " +/- " << fGaus->GetParError(i)
+				  << '\n';
+	}
+	std::cout << "GausPiK chi2/NDF: " << fGaus->GetChisquare() / fGaus->GetNDF() << '\n';
+	std::cout << "GausPiK chi2 prob: " << fGaus->GetProb() << '\n';
 }

@@ -232,6 +232,4 @@ int main()
 	hInvMassSubPiK->Write();
 
 	outFile->Close();
-
-	std::cout <<
 }

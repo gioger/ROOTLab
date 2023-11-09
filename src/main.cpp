@@ -37,15 +37,15 @@ int main()
 	auto* hPhi{new TH1D{"hPhi", "Phi", 500, 0., TMath::TwoPi()}};
 	auto* hTheta{new TH1D{"hTheta", "Theta", 500, 0., TMath::Pi()}};
 
-	auto* hImpulse{new TH1D{"hImpulse", "Impulse", 500, 0., 7.}};
-	auto* hTransverseImpulse{new TH1D{"hTransverseImpulse", "Transverse impulse", 100, 0., 10.}};
-	auto* hEnergy{new TH1D{"hEnergy", "Energy", 500, 0., 6.}};
+	auto* hImpulse{new TH1D{"hImpulse", "Impulse", 500, 0., 5.}};
+	auto* hTransverseImpulse{new TH1D{"hTransverseImpulse", "Transverse impulse", 100, 0., 4.}};
+	auto* hEnergy{new TH1D{"hEnergy", "Energy", 500, 0., 5.}};
 
-	auto* hInvMass{new TH1D{"hInvMass", "Invariant mass", 500, 0., 2.}};
-	auto* hInvMassSameSign{new TH1D{"hInvMassSameSign", "Invariant mass (same sign)", 500, 0., 2.}};
-	auto* hInvMassDiscSign{new TH1D{"hInvMassDiscSign", "Invariant mass (discordant sign)", 500, 0., 2.}};
-	auto* hInvMassPiKSame{new TH1D{"hInvMassPiKSame", "Invariant mass (pi-K same sign)", 500, 0., 2.}};
-	auto* hInvMassPiKDisc{new TH1D{"hInvMassPiKDisc", "Invariant mass (pi-K discordant sign)", 500, 0., 2.}};
+	auto* hInvMass{new TH1D{"hInvMass", "Invariant mass", 500, 0., 6.}};
+	auto* hInvMassSameSign{new TH1D{"hInvMassSameSign", "Invariant mass (same sign)", 500, 0., 5.}};
+	auto* hInvMassDiscSign{new TH1D{"hInvMassDiscSign", "Invariant mass (discordant sign)", 500, 0., 5.}};
+	auto* hInvMassPiKSame{new TH1D{"hInvMassPiKSame", "Invariant mass (pi-K same sign)", 500, 0., 5.}};
+	auto* hInvMassPiKDisc{new TH1D{"hInvMassPiKDisc", "Invariant mass (pi-K discordant sign)", 500, 0., 5.}};
 	auto* hInvMassChildren{new TH1D{"hInvMassChildren", "Invariant mass (children)", 500, 0., 2.}};
 
 	hInvMassSameSign->Sumw2();
@@ -54,9 +54,9 @@ int main()
 	hInvMassPiKDisc->Sumw2();
 
 	auto* hInvMassSubAll{new TH1D{
-		"hInvMassSubAll", "Invariant mass (difference between same & discordant signs - All particles)", 500, 0., 2.}};
+		"hInvMassSubAll", "Invariant mass (difference between same & discordant signs - All particles)", 500, 0., 5.}};
 	auto* hInvMassSubPiK{
-		new TH1D{"hInvMassSubPiK", "Invariant mass (difference between same & discordant signs - pi-K)", 500, 0., 2.}};
+		new TH1D{"hInvMassSubPiK", "Invariant mass (difference between same & discordant signs - pi-K)", 500, 0., 5.}};
 
 	constexpr size_t numEvents{100'000};
 	constexpr size_t numParts{100};
@@ -232,4 +232,6 @@ int main()
 	hInvMassSubPiK->Write();
 
 	outFile->Close();
+
+	std::cout <<
 }

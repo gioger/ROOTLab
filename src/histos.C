@@ -63,27 +63,31 @@ void histos()
 	std::cout << "Impulse chi2/NDF: " << fExpImpulse->GetChisquare() / fExpImpulse->GetNDF() << '\n';
 	std::cout << "Impulse chi2 prob: " << fExpImpulse->GetProb() << '\n';
 
-	TF1* fGaus{new TF1{"fGaus", "gausn(4)", 0., 5.}};
-	fGaus->SetParameter(4, 800.);
-	fGaus->SetParameter(5, 0.9);
-	fGaus->SetParameter(6, 0.05);
-	hInvMassSubAll->Fit(fGaus, "QN");
+	TF1* fGausAll{new TF1{"fGausAll", "gausn(4)", 0., 5.}};
+	fGausAll->SetParameter(4, 800.);
+	fGausAll->SetParameter(5, 0.9);
+	fGausAll->SetParameter(6, 0.05);
+	hInvMassSubAll->Fit(fGausAll, "QN");
 	for (int i{4}; i < 7; ++i)
 	{
-		std::cout << "GausAll fit parameter " << i << ": " << fGaus->GetParameter(i) << " +/- " << fGaus->GetParError(i)
-				  << '\n';
+		std::cout << "GausAll fit parameter " << i << ": " << fGausAll->GetParameter(i) << " +/- "
+				  << fGausAll->GetParError(i) << '\n';
 	}
-	std::cout << "GausAll chi2/NDF: " << fGaus->GetChisquare() / fGaus->GetNDF() << '\n';
-	std::cout << "GausAll chi2 prob: " << fGaus->GetProb() << '\n';
+	std::cout << "GausAll chi2/NDF: " << fGausAll->GetChisquare() / fGausAll->GetNDF() << '\n';
+	std::cout << "GausAll chi2 prob: " << fGausAll->GetProb() << '\n';
 
-	hInvMassSubPiK->Fit(fGaus, "QN");
+	TF1* fGausPiK{new TF1{"fGausPiK", "gausn(4)", 0., 5.}};
+	fGausPiK->SetParameter(4, 800.);
+	fGausPiK->SetParameter(5, 0.9);
+	fGausPiK->SetParameter(6, 0.05);
+	hInvMassSubPiK->Fit(fGausPiK, "QN");
 	for (int i{4}; i < 7; ++i)
 	{
-		std::cout << "GausPiK fit parameter " << i << ": " << fGaus->GetParameter(i) << " +/- " << fGaus->GetParError(i)
-				  << '\n';
+		std::cout << "GausPiK fit parameter " << i << ": " << fGausPiK->GetParameter(i) << " +/- "
+				  << fGausPiK->GetParError(i) << '\n';
 	}
-	std::cout << "GausPiK chi2/NDF: " << fGaus->GetChisquare() / fGaus->GetNDF() << '\n';
-	std::cout << "GausPiK chi2 prob: " << fGaus->GetProb() << '\n';
+	std::cout << "GausPiK chi2/NDF: " << fGausPiK->GetChisquare() / fGausPiK->GetNDF() << '\n';
+	std::cout << "GausPiK chi2 prob: " << fGausPiK->GetProb() << '\n';
 
 	std::array<TCanvas*, 14> canvases;
 	gROOT->SetBatch(kTRUE);
@@ -117,8 +121,12 @@ void histos()
 	hInvMassSubPiK->Draw();
 
 	system("mkdir -p build/pdf");
+	system("mkdir -p build/C");
+	system("mkdir -p build/root");
 	for (auto* canvas : canvases)
 	{
 		canvas->Print((std::string{"build/pdf/"} + canvas->GetName() + ".pdf").c_str());
+		canvas->Print((std::string{"build/C/"} + canvas->GetName() + ".C").c_str());
+		canvas->Print((std::string{"build/root/"} + canvas->GetName() + ".root").c_str());
 	}
 }

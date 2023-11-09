@@ -116,6 +116,7 @@ void histos()
 	canvases[13] = new TCanvas{"cInvMassSubPiK", "Invariant mass sub pi K", 800, 600};
 	hInvMassSubPiK->Draw();
 
+	system("mkdir -p build/pdf");
 	for (auto* canvas : canvases)
 	{
 		canvas->Print((std::string{"build/pdf/"} + canvas->GetName() + ".pdf").c_str());

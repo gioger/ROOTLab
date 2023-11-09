@@ -33,4 +33,41 @@ void histos()
 		std::cout << particleTypes[i] << ": " << hParticleTypes->GetBinContent(i + 1) << " +/- "
 				  << hParticleTypes->GetBinError(i + 1) << '\n';
 	}
+
+	gStyle->SetOptFit(1111);
+
+	TF1* fUnifTheta{new TF1{"fUnifTheta", "[0]", 0., TMath::Pi()}};
+	fUnifTheta->SetParameter(0, 20'000);
+	hTheta->Fit(fUnifTheta, "QN");
+	std::cout << "Theta fit: " << fUnifTheta->GetParameter(0) << " +/- " << fUnifTheta->GetParError(0) << '\n';
+	std::cout << "Theta chi2/NDF: " << fUnifTheta->GetChisquare() / fUnifTheta->GetNDF() << '\n';
+	std::cout << "Theta chi2 prob: " << fUnifTheta->GetProb() << '\n';
+
+	TF1* fUnifPhi{new TF1{"fUnifPhi", "[1]", 0., TMath::TwoPi()}};
+	fUnifPhi->SetParameter(1, 20'000);
+	hPhi->Fit(fUnifPhi, "QN");
+	std::cout << "Phi fit: " << fUnifPhi->GetParameter(1) << " +/- " << fUnifPhi->GetParError(1) << '\n';
+	std::cout << "Phi chi2/NDF: " << fUnifPhi->GetChisquare() / fUnifPhi->GetNDF() << '\n';
+	std::cout << "Phi chi2 prob: " << fUnifPhi->GetProb() << '\n';
+
+	TF1* fExpImpulse{new TF1{"fExpImpulse", "expo(2)", 0., 5.}};
+	fExpImpulse->SetParameter(2, 1.);
+	hImpulse->Fit(fExpImpulse, "QN");
+	std::cout << "Impulse fit amplitude: " << fExpImpulse->GetParameter(2) << " +/- " << fExpImpulse->GetParError(2)
+			  << '\n';
+	std::cout << "Impulse fit decay: " << fExpImpulse->GetParameter(3) << " +/- " << fExpImpulse->GetParError(3)
+			  << '\n';
+	std::cout << "Impulse chi2/NDF: " << fExpImpulse->GetChisquare() / fExpImpulse->GetNDF() << '\n';
+	std::cout << "Impulse chi2 prob: " << fExpImpulse->GetProb() << '\n';
+
+	TF1* fGausAll{new TF1{"fGausAll", "gausn(4)", 0., 5.}};
+	fGausAll->SetParameters(1., 0.9, 0.05);
+	hInvMassSubAll->Fit(fGausAll, "Q");
+	for (int i{4}; i < 7; ++i)
+	{
+		std::cout << "GausAll fit parameter " << i << ": " << fGausAll->GetParameter(i) << " +/- "
+				  << fGausAll->GetParError(i) << '\n';
+	}
+	std::cout << "GausAll chi2/NDF: " << fGausAll->GetChisquare() / fGausAll->GetNDF() << '\n';
+	std::cout << "GausAll chi2 prob: " << fGausAll->GetProb() << '\n';
 }

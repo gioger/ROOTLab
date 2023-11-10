@@ -34,19 +34,49 @@ int main()
 	hParticleTypes->GetXaxis()->SetBinLabel(6, "p-");
 	hParticleTypes->GetXaxis()->SetBinLabel(7, "K*");
 
-	auto* hPhi{new TH1D{"hPhi", "Phi", 500, 0., TMath::TwoPi()}};
-	auto* hTheta{new TH1D{"hTheta", "Theta", 500, 0., TMath::Pi()}};
+	auto* hPhi{new TH1D{"hPhi", "Phi Distribution", 500, 0., TMath::TwoPi()}};
+	hPhi->GetXaxis()->SetTitle("#phi (rad)");
+	hPhi->GetYaxis()->SetTitle("Entries");
 
-	auto* hImpulse{new TH1D{"hImpulse", "Impulse", 500, 0., 10.}};
-	auto* hTransverseImpulse{new TH1D{"hTransverseImpulse", "Transverse impulse", 100, 0., 10.}};
-	auto* hEnergy{new TH1D{"hEnergy", "Energy", 500, 0., 10.}};
+	auto* hTheta{new TH1D{"hTheta", "Theta Distribution", 500, 0., TMath::Pi()}};
+	hTheta->GetXaxis()->SetTitle("#theta (rad)");
+	hTheta->GetYaxis()->SetTitle("Entries");
 
-	auto* hInvMass{new TH1D{"hInvMass", "Invariant mass", 500, 0., 2.}};
-	auto* hInvMassSameSign{new TH1D{"hInvMassSameSign", "Invariant mass (same sign)", 500, 0., 2.}};
-	auto* hInvMassDiscSign{new TH1D{"hInvMassDiscSign", "Invariant mass (discordant sign)", 500, 0., 2.}};
-	auto* hInvMassPiKSame{new TH1D{"hInvMassPiKSame", "Invariant mass (pi-K same sign)", 500, 0., 2.}};
-	auto* hInvMassPiKDisc{new TH1D{"hInvMassPiKDisc", "Invariant mass (pi-K discordant sign)", 500, 0., 2.}};
+	auto* hImpulse{new TH1D{"hImpulse", "Impulse", 500, 0., 5.}};
+	hImpulse->GetXaxis()->SetTitle("Impulse (GeV/c)");
+	hImpulse->GetYaxis()->SetTitle("Entries");
+
+	auto* hTransverseImpulse{new TH1D{"hTransverseImpulse", "Transverse impulse", 100, 0., 4.}};
+	hTransverseImpulse->GetXaxis()->SetTitle("Transverse impulse (GeV/c)");
+	hTransverseImpulse->GetYaxis()->SetTitle("Entries");
+
+	auto* hEnergy{new TH1D{"hEnergy", "Energy", 500, 0., 5.}};
+	hEnergy->GetXaxis()->SetTitle("Energy (GeV)");
+	hEnergy->GetYaxis()->SetTitle("Entries");
+
+	auto* hInvMass{new TH1D{"hInvMass", "Invariant mass (all particles)", 500, 0., 6.}};
+	hInvMass->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
+	hInvMass->GetYaxis()->SetTitle("Entries");
+
+	auto* hInvMassSameSign{new TH1D{"hInvMassSameSign", "Invariant mass (same sign particles)", 500, 0., 5.}};
+	hInvMassSameSign->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
+	hInvMassSameSign->GetYaxis()->SetTitle("Entries");
+
+	auto* hInvMassDiscSign{new TH1D{"hInvMassDiscSign", "Invariant mass (discordant sign particles)", 500, 0., 5.}};
+	hInvMassDiscSign->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
+	hInvMassDiscSign->GetYaxis()->SetTitle("Entries");
+
+	auto* hInvMassPiKSame{new TH1D{"hInvMassPiKSame", "Invariant mass (pi-K same sign)", 500, 0., 5.}};
+	hInvMassPiKSame->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
+	hInvMassPiKSame->GetYaxis()->SetTitle("Entries");
+
+	auto* hInvMassPiKDisc{new TH1D{"hInvMassPiKDisc", "Invariant mass (pi-K discordant sign)", 500, 0., 5.}};
+	hInvMassPiKDisc->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
+	hInvMassPiKDisc->GetYaxis()->SetTitle("Entries");
+
 	auto* hInvMassChildren{new TH1D{"hInvMassChildren", "Invariant mass (children)", 500, 0., 2.}};
+	hInvMassChildren->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
+	hInvMassChildren->GetYaxis()->SetTitle("Entries");
 
 	hInvMassSameSign->Sumw2();
 	hInvMassDiscSign->Sumw2();
@@ -54,9 +84,14 @@ int main()
 	hInvMassPiKDisc->Sumw2();
 
 	auto* hInvMassSubAll{new TH1D{
-		"hInvMassSubAll", "Invariant mass (difference between same & discordant signs - All particles)", 500, 0., 2.}};
+		"hInvMassSubAll", "Invariant mass (difference between same & discordant signs - All particles)", 500, 0., 5.}};
+	hInvMassSubAll->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
+	hInvMassSubAll->GetYaxis()->SetTitle("Entries");
+
 	auto* hInvMassSubPiK{
-		new TH1D{"hInvMassSubPiK", "Invariant mass (difference between same & discordant signs - pi-K)", 500, 0., 2.}};
+		new TH1D{"hInvMassSubPiK", "Invariant mass (difference between same & discordant signs - pi-K)", 500, 0., 5.}};
+	hInvMassSubPiK->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
+	hInvMassSubPiK->GetYaxis()->SetTitle("Entries");
 
 	constexpr size_t numEvents{100'000};
 	constexpr size_t numParts{100};

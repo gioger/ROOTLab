@@ -16,5 +16,5 @@ ResonanceType::ResonanceType(std::string name, double mass, int charge, double w
 void ResonanceType::Print() const
 {
 	ParticleType::Print();
-	std::cout << "Width: " << fWidth << " MeV/c^2\n"; // check units
+	std::cout << "Width: " << fWidth << " GeV/c^2\n";
 }

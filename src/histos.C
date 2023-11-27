@@ -163,9 +163,11 @@ void histos()
 	hImpulse->Draw();
 	fExpImpulse->Draw("SAME");
 	particles->cd(3);
+	hTheta->GetYaxis()->SetTitleOffset(1.6);
 	hTheta->Draw();
 	fUnifTheta->Draw("SAME");
 	particles->cd(4);
+	hPhi->GetYaxis()->SetTitleOffset(1.6);
 	hPhi->Draw();
 	fUnifPhi->Draw("SAME");
 

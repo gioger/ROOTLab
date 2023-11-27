@@ -12,7 +12,7 @@ void Particle::AddParticleType(std::string name, double mass, int charge, double
 		std::exit(EXIT_FAILURE);
 	}
 
-	fParticleTypes[fNParticleType] = (width != 0) //
+	fParticleTypes[fNParticleType] = (width != 0)
 										 ? std::make_unique<ResonanceType>(std::move(name), mass, charge, width)
 										 : std::make_unique<ParticleType>(std::move(name), mass, charge);
 
@@ -142,7 +142,6 @@ void Particle::Decay2Body(Particle& dau1, Particle& dau2) const
 
 void Particle::Boost(double bx, double by, double bz)
 {
-
 	const double energy{Energy()};
 
 	// Boost this Lorentz vector

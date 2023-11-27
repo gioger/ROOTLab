@@ -89,7 +89,9 @@ void histos()
 	std::cout << "GausPiK chi2/NDF: " << fGausPiK->GetChisquare() / fGausPiK->GetNDF() << '\n';
 	std::cout << "GausPiK chi2 prob: " << fGausPiK->GetProb() << '\n';
 
+	// Draw each histo in a canvas
 	std::array<TCanvas*, 14> canvases;
+	// Don't show canvases on screen
 	gROOT->SetBatch(kTRUE);
 	canvases[0] = new TCanvas{"cParticleTypes", "Particle types", 800, 600};
 	hParticleTypes->Draw();
@@ -120,6 +122,7 @@ void histos()
 	canvases[13] = new TCanvas{"cInvMassSubPiK", "Invariant mass sub pi K", 800, 600};
 	hInvMassSubPiK->Draw();
 
+	// Save each canvas as pdf, C and root file
 	system("mkdir -p build/pdf");
 	system("mkdir -p build/C");
 	system("mkdir -p build/root");

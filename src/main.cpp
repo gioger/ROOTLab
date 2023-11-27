@@ -11,7 +11,7 @@
 void Setup()
 {
 	gRandom->SetSeed();
-
+	// Initialize all particle types
 	Particle::AddParticleType("pi+", 0.13957, 1);
 	Particle::AddParticleType("pi-", 0.13957, -1);
 	Particle::AddParticleType("K+", 0.49367, 1);
@@ -25,6 +25,7 @@ int main()
 {
 	Setup();
 
+	// Initialize histograms with the proper axes labels
 	auto* hParticleTypes{new TH1I{"hParticleTypes", "Particle types", 7, 0, 7}};
 	hParticleTypes->GetXaxis()->SetBinLabel(1, "pi+");
 	hParticleTypes->GetXaxis()->SetBinLabel(2, "pi-");
@@ -101,8 +102,9 @@ int main()
 
 	for (size_t i{0}; i < numEvents; i++)
 	{
-		eventParticles.clear(); // to check if capacity is affected
-		std::generate_n(		//
+		// Generate particles for each event
+		eventParticles.clear();
+		std::generate_n( //
 			std::back_inserter(eventParticles), numParts,
 			[&]()
 			{
@@ -160,10 +162,12 @@ int main()
 				return particle;
 			});
 
+		// Handle K* decays
 		for (const auto& p : eventParticles)
 		{
 			if (p.GetName() == "K*")
 			{
+				// K* decays into pi-K
 				const double x{gRandom->Uniform()};
 
 				Particle p1{};
@@ -201,11 +205,13 @@ int main()
 					continue;
 				}
 
+				// Calculate the invariant mass of every couple of particles of the event
+				// Note that particles of type K* are not considered, as they are decayed
 				const double invMass{eventParticles[i].InvMass(eventParticles[j])};
 
 				hInvMass->Fill(invMass);
 
-				// If the product of the charges is >0, the sign is the same; if it's opposite, the sign is discordant
+				// If the product of the charges is > 0, the sign is the same; if it's < 0, the sign is discordant
 				if (eventParticles[i].GetCharge() * eventParticles[j].GetCharge() > 0)
 				{
 					hInvMassSameSign->Fill(invMass);
@@ -239,6 +245,7 @@ int main()
 			}
 		}
 
+		// Calculate the invariant mass of the 2 children of the K* particles
 		for (size_t i{numParts}; i < eventParticles.size(); i += 2)
 		{
 			const double invMass{eventParticles[i].InvMass(eventParticles[i + 1])};
@@ -249,6 +256,7 @@ int main()
 	hInvMassSubAll->Add(hInvMassDiscSign, hInvMassSameSign, 1., -1.);
 	hInvMassSubPiK->Add(hInvMassPiKDisc, hInvMassPiKSame, 1., -1.);
 
+	// Open a file to save the histograms
 	auto* outFile{TFile::Open("histos.root", "RECREATE")};
 
 	hParticleTypes->Write();

@@ -34,6 +34,7 @@ int main()
 	hParticleTypes->GetXaxis()->SetBinLabel(5, "p+");
 	hParticleTypes->GetXaxis()->SetBinLabel(6, "p-");
 	hParticleTypes->GetXaxis()->SetBinLabel(7, "K*");
+	hParticleTypes->GetYaxis()->SetTitle("Entries");
 
 	auto* hPhi{new TH1D{"hPhi", "Phi Distribution", 500, 0., TMath::TwoPi()}};
 	hPhi->GetXaxis()->SetTitle("#phi (rad)");

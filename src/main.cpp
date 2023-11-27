@@ -75,7 +75,7 @@ int main()
 	hInvMassPiKDisc->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
 	hInvMassPiKDisc->GetYaxis()->SetTitle("Entries");
 
-	auto* hInvMassChildren{new TH1D{"hInvMassChildren", "Invariant mass (children)", 500, 0., 2.}};
+	auto* hInvMassChildren{new TH1D{"hInvMassChildren", "Invariant mass (children)", 500, 0.4, 1.4}};
 	hInvMassChildren->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
 	hInvMassChildren->GetYaxis()->SetTitle("Entries");
 

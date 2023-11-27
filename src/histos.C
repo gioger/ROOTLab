@@ -9,6 +9,13 @@
 #include <iostream>
 #include <string>
 
+void setStyle()
+{
+	gROOT->SetStyle("Plain");
+	gStyle->SetPalette(57);
+	gStyle->SetOptTitle(0);
+}
+
 void histos()
 {
 	auto* inFile{new TFile{"build/histos.root"}};
@@ -158,6 +165,6 @@ void histos()
 	hInvMassSubPiK->Draw();
 	fGausPiK->Draw("SAME");
 
-	particles->Print("build/particles.pdf");
-	invMass->Print("build/invMass.pdf");
+	particles->Print("build/pdf/particles.pdf");
+	invMass->Print("build/pdf/invMass.pdf");
 }

@@ -17,6 +17,13 @@ void setStyle()
 	gStyle->SetOptFit(1111);
 }
 
+void setFitStyle(TF1* f)
+{
+	f->SetLineColor(kRed);
+	f->SetLineStyle(1);
+	f->SetLineWidth(2);
+}
+
 void histos()
 {
 	auto* inFile{new TFile{"build/histos.root"}};
@@ -46,29 +53,24 @@ void histos()
 				  << hParticleTypes->GetBinError(i + 1) << '\n';
 	}
 
-	TF1* fUnifTheta{new TF1{"fUnifTheta", "pol0", 0., TMath::Pi()}};
-	fUnifTheta->SetLineColor(kRed);
-	fUnifTheta->SetLineStyle(1);
-	fUnifTheta->SetLineWidth(2);
+	auto* fUnifTheta{new TF1{"fUnifTheta", "pol0", 0., TMath::Pi()}};
+	setFitStyle(fUnifTheta);
 	fUnifTheta->SetParameter(0, 20'000);
 	hTheta->Fit(fUnifTheta, "QN");
 	std::cout << "Theta fit: " << fUnifTheta->GetParameter(0) << " +/- " << fUnifTheta->GetParError(0) << '\n';
 	std::cout << "Theta chi2/NDF: " << fUnifTheta->GetChisquare() / fUnifTheta->GetNDF() << '\n';
 	std::cout << "Theta chi2 prob: " << fUnifTheta->GetProb() << '\n';
 
-	TF1* fUnifPhi{new TF1{"fUnifPhi", "pol0", 0., TMath::TwoPi()}};
-	fUnifPhi->SetLineColor(kRed);
-	fUnifPhi->SetLineStyle(1);
-	fUnifPhi->SetLineWidth(2);
+	auto* fUnifPhi{new TF1{"fUnifPhi", "pol0", 0., TMath::TwoPi()}};
+	setFitStyle(fUnifPhi);
 	fUnifPhi->SetParameter(0, 20'000);
 	hPhi->Fit(fUnifPhi, "QN");
 	std::cout << "Phi fit: " << fUnifPhi->GetParameter(0) << " +/- " << fUnifPhi->GetParError(0) << '\n';
 	std::cout << "Phi chi2/NDF: " << fUnifPhi->GetChisquare() / fUnifPhi->GetNDF() << '\n';
 	std::cout << "Phi chi2 prob: " << fUnifPhi->GetProb() << '\n';
 
-	TF1* fExpImpulse{new TF1{"fExpImpulse", "expo", 0., 5.}};
-	fExpImpulse->SetLineColor(kRed);
-	fExpImpulse->SetLineStyle(1);
+	auto* fExpImpulse{new TF1{"fExpImpulse", "expo", 0., 5.}};
+	setFitStyle(fExpImpulse);
 	fExpImpulse->SetLineWidth(1);
 	fExpImpulse->SetParameter(0, 1.);
 	fExpImpulse->SetParameter(1, 1.);
@@ -80,10 +82,8 @@ void histos()
 	std::cout << "Impulse chi2/NDF: " << fExpImpulse->GetChisquare() / fExpImpulse->GetNDF() << '\n';
 	std::cout << "Impulse chi2 prob: " << fExpImpulse->GetProb() << '\n';
 
-	TF1* fGausAll{new TF1{"fGausAll", "gausn", 0., 5.}};
-	fGausAll->SetLineColor(kRed);
-	fGausAll->SetLineStyle(1);
-	fGausAll->SetLineWidth(2);
+	auto* fGausAll{new TF1{"fGausAll", "gausn", 0., 5.}};
+	setFitStyle(fGausAll);
 	fGausAll->SetParameter(0, 800.);
 	fGausAll->SetParameter(1, 0.9);
 	fGausAll->SetParameter(2, 0.05);
@@ -96,7 +96,7 @@ void histos()
 	std::cout << "GausAll chi2/NDF: " << fGausAll->GetChisquare() / fGausAll->GetNDF() << '\n';
 	std::cout << "GausAll chi2 prob: " << fGausAll->GetProb() << '\n';
 
-	TF1* fGausPiK{new TF1{"fGausPiK", "gausn", 0., 5.}};
+	auto* fGausPiK{new TF1{"fGausPiK", "gausn", 0., 5.}};
 	fGausPiK->SetLineColor(kRed);
 	fGausPiK->SetLineStyle(1);
 	fGausPiK->SetLineWidth(2);
@@ -183,6 +183,6 @@ void histos()
 	hInvMassSubPiK->Draw();
 	fGausPiK->Draw("SAME");
 
-	particles->Print("build/pdf/particles.pdf");
-	invMass->Print("build/pdf/invMass.pdf");
+	particles->Print("build/particles.pdf");
+	invMass->Print("build/invMass.pdf");
 }

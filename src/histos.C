@@ -97,9 +97,7 @@ void histos()
 	std::cout << "GausAll chi2 prob: " << fGausAll->GetProb() << '\n';
 
 	auto* fGausPiK{new TF1{"fGausPiK", "gausn", 0., 5.}};
-	fGausPiK->SetLineColor(kRed);
-	fGausPiK->SetLineStyle(1);
-	fGausPiK->SetLineWidth(2);
+	setFitStyle(fGausPiK);
 	fGausPiK->SetParameter(0, 800.);
 	fGausPiK->SetParameter(1, 0.9);
 	fGausPiK->SetParameter(2, 0.05);

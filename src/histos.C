@@ -40,7 +40,7 @@ void histos()
 	auto* hInvMassDiscSign{dynamic_cast<TH1D*>(inFile->Get("hInvMassDiscSign"))};
 	auto* hInvMassPiKSame{dynamic_cast<TH1D*>(inFile->Get("hInvMassPiKSame"))};
 	auto* hInvMassPiKDisc{dynamic_cast<TH1D*>(inFile->Get("hInvMassPiKDisc"))};
-	auto* hInvMassChildren{dynamic_cast<TH1D*>(inFile->Get("hInvMassChildren"))};
+	auto* hInvMassDecayProd{dynamic_cast<TH1D*>(inFile->Get("hInvMassDecayProd"))};
 	auto* hInvMassSubAll{dynamic_cast<TH1D*>(inFile->Get("hInvMassSubAll"))};
 	auto* hInvMassSubPiK{dynamic_cast<TH1D*>(inFile->Get("hInvMassSubPiK"))};
 
@@ -136,8 +136,8 @@ void histos()
 	hInvMassPiKSame->Draw();
 	canvases[10] = new TCanvas{"cInvMassPiKDisc", "Invariant mass pi K disc", 800, 600};
 	hInvMassPiKDisc->Draw();
-	canvases[11] = new TCanvas{"cInvMassChildren", "Invariant mass children", 800, 600};
-	hInvMassChildren->Draw();
+	canvases[11] = new TCanvas{"cInvMassDecayProd", "Invariant mass decay products", 800, 600};
+	hInvMassDecayProd->Draw();
 	canvases[12] = new TCanvas{"cInvMassSubAll", "Invariant mass sub all", 800, 600};
 	hInvMassSubAll->Draw();
 	canvases[13] = new TCanvas{"cInvMassSubPiK", "Invariant mass sub pi K", 800, 600};
@@ -173,7 +173,7 @@ void histos()
 	auto* invMass{new TCanvas{"invMass", "Invariant masses", 800, 600}};
 	invMass->Divide(1, 3);
 	invMass->cd(1);
-	hInvMassChildren->Draw();
+	hInvMassDecayProd->Draw();
 	invMass->cd(2);
 	hInvMassSubAll->Draw();
 	fGausAll->Draw("SAME");

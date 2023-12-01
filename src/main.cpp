@@ -76,9 +76,9 @@ int main()
 	hInvMassPiKDisc->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
 	hInvMassPiKDisc->GetYaxis()->SetTitle("Entries");
 
-	auto* hInvMassChildren{new TH1D{"hInvMassChildren", "Invariant mass (children)", 500, 0.4, 1.4}};
-	hInvMassChildren->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
-	hInvMassChildren->GetYaxis()->SetTitle("Entries");
+	auto* hInvMassDecayProd{new TH1D{"hInvMassDecayProd", "Invariant mass (decay products)", 500, 0.4, 1.4}};
+	hInvMassDecayProd->GetXaxis()->SetTitle("Invariant mass (GeV/c^2)");
+	hInvMassDecayProd->GetYaxis()->SetTitle("Entries");
 
 	hInvMassSameSign->Sumw2();
 	hInvMassDiscSign->Sumw2();
@@ -246,11 +246,11 @@ int main()
 			}
 		}
 
-		// Calculate the invariant mass of the 2 children of the K* particles
+		// Calculate the invariant mass of the 2 decay products of the K* particles
 		for (size_t i{numParts}; i < eventParticles.size(); i += 2)
 		{
 			const double invMass{eventParticles[i].InvMass(eventParticles[i + 1])};
-			hInvMassChildren->Fill(invMass);
+			hInvMassDecayProd->Fill(invMass);
 		}
 	}
 
@@ -271,7 +271,7 @@ int main()
 	hInvMassDiscSign->Write();
 	hInvMassPiKSame->Write();
 	hInvMassPiKDisc->Write();
-	hInvMassChildren->Write();
+	hInvMassDecayProd->Write();
 	hInvMassSubAll->Write();
 	hInvMassSubPiK->Write();
 

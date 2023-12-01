@@ -9,6 +9,21 @@
 #include <iostream>
 #include <string>
 
+void setStyle()
+{
+	gROOT->SetStyle("Plain");
+	gStyle->SetPalette(57);
+	gStyle->SetOptTitle(0);
+	gStyle->SetOptFit(1111);
+}
+
+void setFitStyle(TF1* f)
+{
+	f->SetLineColor(kRed);
+	f->SetLineStyle(1);
+	f->SetLineWidth(2);
+}
+
 void histos()
 {
 	auto* inFile{new TFile{"build/histos.root"}};
@@ -25,7 +40,7 @@ void histos()
 	auto* hInvMassDiscSign{dynamic_cast<TH1D*>(inFile->Get("hInvMassDiscSign"))};
 	auto* hInvMassPiKSame{dynamic_cast<TH1D*>(inFile->Get("hInvMassPiKSame"))};
 	auto* hInvMassPiKDisc{dynamic_cast<TH1D*>(inFile->Get("hInvMassPiKDisc"))};
-	auto* hInvMassChildren{dynamic_cast<TH1D*>(inFile->Get("hInvMassChildren"))};
+	auto* hInvMassDecayProd{dynamic_cast<TH1D*>(inFile->Get("hInvMassDecayProd"))};
 	auto* hInvMassSubAll{dynamic_cast<TH1D*>(inFile->Get("hInvMassSubAll"))};
 	auto* hInvMassSubPiK{dynamic_cast<TH1D*>(inFile->Get("hInvMassSubPiK"))};
 
@@ -38,21 +53,25 @@ void histos()
 				  << hParticleTypes->GetBinError(i + 1) << '\n';
 	}
 
-	TF1* fUnifTheta{new TF1{"fUnifTheta", "pol0", 0., TMath::Pi()}};
+	auto* fUnifTheta{new TF1{"fUnifTheta", "pol0", 0., TMath::Pi()}};
+	setFitStyle(fUnifTheta);
 	fUnifTheta->SetParameter(0, 20'000);
 	hTheta->Fit(fUnifTheta, "QN");
 	std::cout << "Theta fit: " << fUnifTheta->GetParameter(0) << " +/- " << fUnifTheta->GetParError(0) << '\n';
 	std::cout << "Theta chi2/NDF: " << fUnifTheta->GetChisquare() / fUnifTheta->GetNDF() << '\n';
 	std::cout << "Theta chi2 prob: " << fUnifTheta->GetProb() << '\n';
 
-	TF1* fUnifPhi{new TF1{"fUnifPhi", "pol0", 0., TMath::TwoPi()}};
+	auto* fUnifPhi{new TF1{"fUnifPhi", "pol0", 0., TMath::TwoPi()}};
+	setFitStyle(fUnifPhi);
 	fUnifPhi->SetParameter(0, 20'000);
 	hPhi->Fit(fUnifPhi, "QN");
 	std::cout << "Phi fit: " << fUnifPhi->GetParameter(0) << " +/- " << fUnifPhi->GetParError(0) << '\n';
 	std::cout << "Phi chi2/NDF: " << fUnifPhi->GetChisquare() / fUnifPhi->GetNDF() << '\n';
 	std::cout << "Phi chi2 prob: " << fUnifPhi->GetProb() << '\n';
 
-	TF1* fExpImpulse{new TF1{"fExpImpulse", "expo", 0., 5.}};
+	auto* fExpImpulse{new TF1{"fExpImpulse", "expo", 0., 5.}};
+	setFitStyle(fExpImpulse);
+	fExpImpulse->SetLineWidth(1);
 	fExpImpulse->SetParameter(0, 1.);
 	fExpImpulse->SetParameter(1, 1.);
 	hImpulse->Fit(fExpImpulse, "QN");
@@ -63,7 +82,8 @@ void histos()
 	std::cout << "Impulse chi2/NDF: " << fExpImpulse->GetChisquare() / fExpImpulse->GetNDF() << '\n';
 	std::cout << "Impulse chi2 prob: " << fExpImpulse->GetProb() << '\n';
 
-	TF1* fGausAll{new TF1{"fGausAll", "gausn", 0., 5.}};
+	auto* fGausAll{new TF1{"fGausAll", "gausn", 0., 5.}};
+	setFitStyle(fGausAll);
 	fGausAll->SetParameter(0, 800.);
 	fGausAll->SetParameter(1, 0.9);
 	fGausAll->SetParameter(2, 0.05);
@@ -76,7 +96,8 @@ void histos()
 	std::cout << "GausAll chi2/NDF: " << fGausAll->GetChisquare() / fGausAll->GetNDF() << '\n';
 	std::cout << "GausAll chi2 prob: " << fGausAll->GetProb() << '\n';
 
-	TF1* fGausPiK{new TF1{"fGausPiK", "gausn", 0., 5.}};
+	auto* fGausPiK{new TF1{"fGausPiK", "gausn", 0., 5.}};
+	setFitStyle(fGausPiK);
 	fGausPiK->SetParameter(0, 800.);
 	fGausPiK->SetParameter(1, 0.9);
 	fGausPiK->SetParameter(2, 0.05);
@@ -89,7 +110,9 @@ void histos()
 	std::cout << "GausPiK chi2/NDF: " << fGausPiK->GetChisquare() / fGausPiK->GetNDF() << '\n';
 	std::cout << "GausPiK chi2 prob: " << fGausPiK->GetProb() << '\n';
 
+	// Draw each histo in a canvas
 	std::array<TCanvas*, 14> canvases;
+	// Don't show canvases on screen
 	gROOT->SetBatch(kTRUE);
 	canvases[0] = new TCanvas{"cParticleTypes", "Particle types", 800, 600};
 	hParticleTypes->Draw();
@@ -113,13 +136,14 @@ void histos()
 	hInvMassPiKSame->Draw();
 	canvases[10] = new TCanvas{"cInvMassPiKDisc", "Invariant mass pi K disc", 800, 600};
 	hInvMassPiKDisc->Draw();
-	canvases[11] = new TCanvas{"cInvMassChildren", "Invariant mass children", 800, 600};
-	hInvMassChildren->Draw();
+	canvases[11] = new TCanvas{"cInvMassDecayProd", "Invariant mass decay products", 800, 600};
+	hInvMassDecayProd->Draw();
 	canvases[12] = new TCanvas{"cInvMassSubAll", "Invariant mass sub all", 800, 600};
 	hInvMassSubAll->Draw();
 	canvases[13] = new TCanvas{"cInvMassSubPiK", "Invariant mass sub pi K", 800, 600};
 	hInvMassSubPiK->Draw();
 
+	// Save each canvas as pdf, C and root file
 	system("mkdir -p build/pdf");
 	system("mkdir -p build/C");
 	system("mkdir -p build/root");
@@ -138,16 +162,18 @@ void histos()
 	hImpulse->Draw();
 	fExpImpulse->Draw("SAME");
 	particles->cd(3);
+	hTheta->GetYaxis()->SetTitleOffset(1.6);
 	hTheta->Draw();
 	fUnifTheta->Draw("SAME");
 	particles->cd(4);
+	hPhi->GetYaxis()->SetTitleOffset(1.6);
 	hPhi->Draw();
 	fUnifPhi->Draw("SAME");
 
 	auto* invMass{new TCanvas{"invMass", "Invariant masses", 800, 600}};
 	invMass->Divide(1, 3);
 	invMass->cd(1);
-	hInvMassChildren->Draw();
+	hInvMassDecayProd->Draw();
 	invMass->cd(2);
 	hInvMassSubAll->Draw();
 	fGausAll->Draw("SAME");

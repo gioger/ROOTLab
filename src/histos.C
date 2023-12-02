@@ -117,6 +117,7 @@ void histos()
 
 	auto* fGausDecayProd{new TF1{"fGausDecayProd", "gausn", 0., 5.}};
 	setFitStyle(fGausDecayProd);
+	fGausDecayProd->SetLineWidth(1);
 	fGausDecayProd->SetParameter(0, 800.);
 	fGausDecayProd->SetParameter(1, 0.9);
 	fGausDecayProd->SetParameter(2, 0.05);
@@ -202,6 +203,6 @@ void histos()
 	hInvMassSubPiK->Draw();
 	fGausPiK->Draw("SAME");
 
-	particles->Print("build/particles.pdf");
-	invMass->Print("build/invMass.pdf");
+	particles->Print((std::string{"build/pdf/"} + particles->GetName() + ".pdf").c_str());
+	invMass->Print((std::string{"build/pdf/"} + invMass->GetName() + ".pdf").c_str());
 }

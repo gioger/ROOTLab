@@ -13,8 +13,8 @@ void setStyle()
 {
 	gROOT->SetStyle("Plain");
 	gStyle->SetPalette(57);
-	gStyle->SetOptTitle(0);
-	gStyle->SetOptFit(1112);
+	gStyle->SetOptTitle(1);
+	gStyle->SetOptFit(1111);
 }
 
 void setFitStyle(TF1* f)

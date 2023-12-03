@@ -61,6 +61,7 @@ void histos()
 	std::cout << "Theta chi2/NDF: " << fUnifTheta->GetChisquare() / fUnifTheta->GetNDF() << '\n';
 	std::cout << "Theta chi2 prob: " << fUnifTheta->GetProb() << '\n';
 	std::cout << "Theta NDF: " << fUnifTheta->GetNDF() << '\n';
+	std::cout << "Theta chi2: " << fUnifTheta->GetChisquare() << '\n';
 
 	auto* fUnifPhi{new TF1{"fUnifPhi", "pol0", 0., TMath::TwoPi()}};
 	setFitStyle(fUnifPhi);
@@ -70,6 +71,7 @@ void histos()
 	std::cout << "Phi chi2/NDF: " << fUnifPhi->GetChisquare() / fUnifPhi->GetNDF() << '\n';
 	std::cout << "Phi chi2 prob: " << fUnifPhi->GetProb() << '\n';
 	std::cout << "Phi NDF: " << fUnifPhi->GetNDF() << '\n';
+	std::cout << "Phi chi2: " << fUnifPhi->GetChisquare() << '\n';
 
 	auto* fExpImpulse{new TF1{"fExpImpulse", "expo", 0., 5.}};
 	setFitStyle(fExpImpulse);
@@ -84,6 +86,7 @@ void histos()
 	std::cout << "Impulse chi2/NDF: " << fExpImpulse->GetChisquare() / fExpImpulse->GetNDF() << '\n';
 	std::cout << "Impulse chi2 prob: " << fExpImpulse->GetProb() << '\n';
 	std::cout << "Impulse NDF: " << fExpImpulse->GetNDF() << '\n';
+	std::cout << "Impulse chi2: " << fExpImpulse->GetChisquare() << '\n';
 
 	auto* fGausAll{new TF1{"fGausAll", "gausn", 0., 5.}};
 	setFitStyle(fGausAll);
@@ -99,6 +102,7 @@ void histos()
 	std::cout << "GausAll chi2/NDF: " << fGausAll->GetChisquare() / fGausAll->GetNDF() << '\n';
 	std::cout << "GausAll chi2 prob: " << fGausAll->GetProb() << '\n';
 	std::cout << "GausAll NDF: " << fGausAll->GetNDF() << '\n';
+	std::cout << "GausAll chi2: " << fGausAll->GetChisquare() << '\n';
 
 	auto* fGausPiK{new TF1{"fGausPiK", "gausn", 0., 5.}};
 	setFitStyle(fGausPiK);
@@ -114,6 +118,7 @@ void histos()
 	std::cout << "GausPiK chi2/NDF: " << fGausPiK->GetChisquare() / fGausPiK->GetNDF() << '\n';
 	std::cout << "GausPiK chi2 prob: " << fGausPiK->GetProb() << '\n';
 	std::cout << "GausPiK NDF: " << fGausPiK->GetNDF() << '\n';
+	std::cout << "GausPiK chi2: " << fGausPiK->GetChisquare() << '\n';
 
 	auto* fGausDecayProd{new TF1{"fGausDecayProd", "gausn", 0., 5.}};
 	setFitStyle(fGausDecayProd);
@@ -130,6 +135,7 @@ void histos()
 	std::cout << "GausDecayProd chi2/NDF: " << fGausDecayProd->GetChisquare() / fGausDecayProd->GetNDF() << '\n';
 	std::cout << "GausDecayProd chi2 prob: " << fGausDecayProd->GetProb() << '\n';
 	std::cout << "GausDecayProd NDF: " << fGausDecayProd->GetNDF() << '\n';
+	std::cout << "GausDecayProd chi2: " << fGausDecayProd->GetChisquare() << '\n';
 
 	// Draw each histo in a canvas
 	std::array<TCanvas*, 14> canvases;

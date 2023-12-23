@@ -137,6 +137,9 @@ void histos()
 	std::cout << "GausDecayProd NDF: " << fGausDecayProd->GetNDF() << '\n';
 	std::cout << "GausDecayProd chi2: " << fGausDecayProd->GetChisquare() << '\n';
 
+	// Set histograms style
+	setStyle();
+
 	// Draw each histo in a canvas
 	std::array<TCanvas*, 14> canvases;
 	// Don't show canvases on screen

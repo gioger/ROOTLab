@@ -209,6 +209,6 @@ void histos()
 	hInvMassSubPiK->Draw();
 	fGausPiK->Draw("SAME");
 
-	particles->Print((std::string{"build/pdf/"} + particles->GetName() + ".pdf").c_str());
-	invMass->Print((std::string{"build/pdf/"} + invMass->GetName() + ".pdf").c_str());
+	particles->Print((std::string{"build/"} + particles->GetName() + ".pdf").c_str());
+	invMass->Print((std::string{"build/"} + invMass->GetName() + ".pdf").c_str());
 }

@@ -14,7 +14,10 @@ void setStyle()
 	gROOT->SetStyle("Plain");
 	gStyle->SetPalette(57);
 	gStyle->SetOptTitle(1);
-	gStyle->SetOptFit(1111);
+	gStyle->SetOptFit(1);
+
+	// Don't display canvases on screen
+	gROOT->SetBatch(kTRUE);
 }
 
 void setFitStyle(TF1* f)
@@ -53,10 +56,13 @@ void histos()
 				  << hParticleTypes->GetBinError(i + 1) << '\n';
 	}
 
+	// Set histograms style
+	setStyle();
+
 	auto* fUnifTheta{new TF1{"fUnifTheta", "pol0", 0., TMath::Pi()}};
 	setFitStyle(fUnifTheta);
 	fUnifTheta->SetParameter(0, 20'000);
-	hTheta->Fit(fUnifTheta, "QN");
+	hTheta->Fit(fUnifTheta, "Q");
 	std::cout << "Theta fit: " << fUnifTheta->GetParameter(0) << " +/- " << fUnifTheta->GetParError(0) << '\n';
 	std::cout << "Theta chi2/NDF: " << fUnifTheta->GetChisquare() / fUnifTheta->GetNDF() << '\n';
 	std::cout << "Theta chi2 prob: " << fUnifTheta->GetProb() << '\n';
@@ -66,7 +72,7 @@ void histos()
 	auto* fUnifPhi{new TF1{"fUnifPhi", "pol0", 0., TMath::TwoPi()}};
 	setFitStyle(fUnifPhi);
 	fUnifPhi->SetParameter(0, 20'000);
-	hPhi->Fit(fUnifPhi, "QN");
+	hPhi->Fit(fUnifPhi, "Q");
 	std::cout << "Phi fit: " << fUnifPhi->GetParameter(0) << " +/- " << fUnifPhi->GetParError(0) << '\n';
 	std::cout << "Phi chi2/NDF: " << fUnifPhi->GetChisquare() / fUnifPhi->GetNDF() << '\n';
 	std::cout << "Phi chi2 prob: " << fUnifPhi->GetProb() << '\n';
@@ -78,7 +84,7 @@ void histos()
 	fExpImpulse->SetLineWidth(1);
 	fExpImpulse->SetParameter(0, 1.);
 	fExpImpulse->SetParameter(1, 1.);
-	hImpulse->Fit(fExpImpulse, "QN");
+	hImpulse->Fit(fExpImpulse, "Q");
 	std::cout << "Impulse fit amplitude: " << fExpImpulse->GetParameter(0) << " +/- " << fExpImpulse->GetParError(0)
 			  << '\n';
 	std::cout << "Impulse fit decay: " << fExpImpulse->GetParameter(1) << " +/- " << fExpImpulse->GetParError(1)
@@ -93,7 +99,7 @@ void histos()
 	fGausAll->SetParameter(0, 800.);
 	fGausAll->SetParameter(1, 0.9);
 	fGausAll->SetParameter(2, 0.05);
-	hInvMassSubAll->Fit(fGausAll, "QN");
+	hInvMassSubAll->Fit(fGausAll, "Q");
 	for (int i{0}; i < 3; ++i)
 	{
 		std::cout << "GausAll fit parameter " << i << ": " << fGausAll->GetParameter(i) << " +/- "
@@ -109,7 +115,7 @@ void histos()
 	fGausPiK->SetParameter(0, 800.);
 	fGausPiK->SetParameter(1, 0.9);
 	fGausPiK->SetParameter(2, 0.05);
-	hInvMassSubPiK->Fit(fGausPiK, "QN");
+	hInvMassSubPiK->Fit(fGausPiK, "Q");
 	for (int i{0}; i < 3; ++i)
 	{
 		std::cout << "GausPiK fit parameter " << i << ": " << fGausPiK->GetParameter(i) << " +/- "
@@ -126,7 +132,7 @@ void histos()
 	fGausDecayProd->SetParameter(0, 800.);
 	fGausDecayProd->SetParameter(1, 0.9);
 	fGausDecayProd->SetParameter(2, 0.05);
-	hInvMassDecayProd->Fit(fGausDecayProd, "QN");
+	hInvMassDecayProd->Fit(fGausDecayProd, "Q");
 	for (int i{0}; i < 3; ++i)
 	{
 		std::cout << "GausDecayProd fit parameter " << i << ": " << fGausDecayProd->GetParameter(i) << " +/- "
@@ -137,13 +143,9 @@ void histos()
 	std::cout << "GausDecayProd NDF: " << fGausDecayProd->GetNDF() << '\n';
 	std::cout << "GausDecayProd chi2: " << fGausDecayProd->GetChisquare() << '\n';
 
-	// Set histograms style
-	setStyle();
-
 	// Draw each histo in a canvas
 	std::array<TCanvas*, 14> canvases;
-	// Don't show canvases on screen
-	gROOT->SetBatch(kTRUE);
+
 	canvases[0] = new TCanvas{"cParticleTypes", "Particle types", 800, 600};
 	hParticleTypes->Draw();
 	canvases[1] = new TCanvas{"cPhi", "Phi", 800, 600};

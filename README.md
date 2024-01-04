@@ -1,6 +1,11 @@
 # ROOTLab
 Here is a repository for UniBo lab2 c++/ROOT labs.
 
+We wrote a C++ code to simulate particle collision events and analyze collected data with ROOT. We were able to correctly determine K*'s mass and width by analyzing its decay products.
+
+You'll find all source code, the ROOT macro (`histos.C`) and the lab report (`RelazioneROOT`, in Italian).
+
+
 ## Compiling and Running
 To compile and run the simulation code, just run the following command:
 ```bash
